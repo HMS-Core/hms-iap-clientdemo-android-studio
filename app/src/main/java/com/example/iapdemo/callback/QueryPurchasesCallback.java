@@ -19,7 +19,6 @@ package com.example.iapdemo.callback;
 import com.huawei.hms.iap.entity.OwnedPurchasesResult;
 
 public interface QueryPurchasesCallback {
-
     void onSuccess(OwnedPurchasesResult result);
 
     void onFail(Exception e);

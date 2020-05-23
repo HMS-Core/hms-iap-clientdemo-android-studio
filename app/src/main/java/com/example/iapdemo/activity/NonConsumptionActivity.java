@@ -16,7 +16,6 @@
 
 package com.example.iapdemo.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,16 +27,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.iapdemo.adapter.ProductListAdapter;
-import com.example.iapdemo.callback.ProductInfoCallback;
 import com.example.iapdemo.callback.PurchaseIntentResultCallback;
 import com.example.iapdemo.callback.QueryPurchasesCallback;
+import com.example.iapdemo.callback.ProductInfoCallback;
 import com.example.iapdemo.common.CipherUtil;
 import com.example.iapdemo.common.Constants;
 import com.example.iapdemo.common.ExceptionHandle;
 import com.example.iapdemo.common.IapRequestHelper;
-import com.example.iapdemo.common.ProductItem;
 import com.example.iapdemo.common.Utils;
 import com.huawei.hms.iap.Iap;
+import com.huawei.hms.iap.IapApiException;
 import com.huawei.hms.iap.IapClient;
 import com.huawei.hms.iap.entity.InAppPurchaseData;
 import com.huawei.hms.iap.entity.OrderStatusCode;
@@ -53,17 +52,16 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NonConsumptionActivity extends Activity {
+public class NonConsumptionActivity extends AppCompatActivity {
     private String TAG = "NonConsumptionActivity";
 
     private IapClient mClient;
 
     private ListView nonconsumableProductListview;
-    private List<ProductItem> nonconsumableProducts = new ArrayList<ProductItem>();
+    private List<ProductInfo> nonconsumableProducts = new ArrayList<ProductInfo>();
     private ProductListAdapter productListAdapter;
     private LinearLayout hasOwnedHiddenLevelLayout;
-
-    private static String HIDDEN_LEVEL_PRODUCTID = "NonCProduct01";
+    private static final String HIDDEN_LEVEL_PRODUCTID = "NonCProduct01";
     private static boolean isHiddenLevelPurchased = false;
 
     @Override
@@ -72,6 +70,7 @@ public class NonConsumptionActivity extends Activity {
         setContentView(R.layout.activity_non_consumption);
         mClient = Iap.getIapClient(this);
         initView();
+        // Call the obtainOwnedPurchases API during startup to obtain the data about non-consumable products that a user has purchased.
         queryPurchases();
     }
 
@@ -82,9 +81,6 @@ public class NonConsumptionActivity extends Activity {
         hasOwnedHiddenLevelLayout = (LinearLayout) findViewById(R.id.layout_hasOwnedHiddenLevel);
     }
 
-    /**
-     * Call the obtainOwnedPurchases API during startup to obtain the data about non-consumable products that a user has purchased.
-     */
     private void queryPurchases() {
         // Query users' purchased non-consumable products.
         IapRequestHelper.obtainOwnedPurchases(mClient, IapClient.PriceType.IN_APP_NONCONSUMABLE, new QueryPurchasesCallback() {
@@ -97,13 +93,12 @@ public class NonConsumptionActivity extends Activity {
             @Override
             public void onFail(Exception e) {
                 Log.e(TAG, "obtainOwnedPurchases, type=" + IapClient.PriceType.IN_APP_NONCONSUMABLE + ", " + e.getMessage());
-                Toast.makeText(NonConsumptionActivity.this, "get Purchases fail, " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Utils.showMessage(NonConsumptionActivity.this, "get Purchases fail, " + e.getMessage());
             }
         });
 
     }
 
-    // To check if the HiddenLevel has been purchased.
     private void checkHiddenLevelPurchaseState(OwnedPurchasesResult result) {
         if (result == null || result.getInAppPurchaseDataList() == null) {
             Log.i(TAG, "result is null");
@@ -122,6 +117,7 @@ public class NonConsumptionActivity extends Activity {
                             isHiddenLevelPurchased = true;
                         }
                     }
+
                 } catch (JSONException e) {
                     Log.e(TAG, "delivery:" + e.getMessage());
                 }
@@ -176,8 +172,7 @@ public class NonConsumptionActivity extends Activity {
         hasOwnedHiddenLevelLayout.setVisibility(View.GONE);
 
         for (ProductInfo productInfo:products) {
-            ProductItem productItem = new ProductItem(productInfo);
-            nonconsumableProducts.add(productItem);
+            nonconsumableProducts.add(productInfo);
         }
 
         productListAdapter = new ProductListAdapter(this, nonconsumableProducts);
@@ -192,8 +187,8 @@ public class NonConsumptionActivity extends Activity {
     }
 
     private void gotoBuy(int index) {
-        ProductItem productItem = nonconsumableProducts.get(index);
-        IapRequestHelper.createPurchaseIntent(mClient, productItem.getProductInfo().getProductId(), IapClient.PriceType.IN_APP_NONCONSUMABLE, new PurchaseIntentResultCallback() {
+        ProductInfo productInfo = nonconsumableProducts.get(index);
+        IapRequestHelper.createPurchaseIntent(mClient, productInfo.getProductId(), IapClient.PriceType.IN_APP_NONCONSUMABLE, new PurchaseIntentResultCallback() {
             @Override
             public void onSuccess(PurchaseIntentResult result) {
                 if (result == null) {
@@ -208,6 +203,7 @@ public class NonConsumptionActivity extends Activity {
             public void onFail(Exception e) {
                 int errorCode = ExceptionHandle.handle(NonConsumptionActivity.this, e);
                 if (errorCode != ExceptionHandle.SOLVED) {
+                    IapApiException apiException = (IapApiException)e;
                     Log.i(TAG, "createPurchaseIntent, returnCode: " + errorCode);
                     // handle error scenarios
                     switch (errorCode) {

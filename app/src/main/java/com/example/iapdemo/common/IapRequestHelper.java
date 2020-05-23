@@ -41,7 +41,6 @@ import com.huawei.hms.iap.entity.ProductInfoReq;
 import com.huawei.hms.iap.entity.ProductInfoResult;
 import com.huawei.hms.iap.entity.PurchaseIntentReq;
 import com.huawei.hms.iap.entity.PurchaseIntentResult;
-import com.huawei.hms.iap.entity.PurchaseIntentWithPriceReq;
 import com.huawei.hms.support.api.client.Status;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class IapRequestHelper {
     private final static String TAG = "IapRequestHelper";
 
     /**
-     * Create a PurchaseIntentReq object.
+     * Create a PurchaseIntentReq request
      * @param type In-app product type.
      *             The value contains: 0: consumable 1: non-consumable 2 auto-renewable subscription
      * @param productId ID of the in-app product to be paid.
@@ -65,28 +64,6 @@ public class IapRequestHelper {
         req.setPriceType(type);
         req.setProductId(productId);
         req.setDeveloperPayload("testPurchase");
-        return req;
-    }
-
-    /**
-     * Create a PurchaseIntentWithPriceReq object.
-     *
-     * @param productItem  In-app product to be paid.
-     * @return PurchaseIntentWithPriceReq
-     */
-    private static PurchaseIntentWithPriceReq createPurchaseIntentWithPriceReq(ProductItem productItem) {
-
-        PurchaseIntentWithPriceReq req = new PurchaseIntentWithPriceReq();
-        req.setProductId(productItem.getProductId());
-        // The value contains: 0: consumable 1: non-consumable
-        req.setPriceType(productItem.getPriceType());
-        req.setCurrency(productItem.getCurrency());
-        req.setDeveloperPayload("testCreatePurchaseIntentWithPrice");
-        req.setSdkChannel("1");
-        req.setProductName(productItem.getProductName());
-        req.setAmount(productItem.getPrice());
-        req.setServiceCatalog("X38");
-        req.setCountry("CN");
         return req;
     }
 
@@ -182,15 +159,15 @@ public class IapRequestHelper {
 
     /**
      * create orders for in-app products in the PMS
-     * @param iapClient IapClient instance to call the createPurchaseIntent API.
+     * @param mClient IapClient instance to call the obtainOwnedPurchases API.
      * @param productId ID of the in-app product to be paid.
      *                  The in-app product ID is the product ID you set during in-app product configuration in AppGallery Connect.
      * @param type  In-app product type.
      *              The value contains: 0: consumable 1: non-consumable 2 auto-renewable subscription
      */
-    public static void createPurchaseIntent(final IapClient iapClient, String productId, int type, final PurchaseIntentResultCallback callback) {
+    public static void createPurchaseIntent(IapClient mClient, String productId, int type, final PurchaseIntentResultCallback callback) {
         Log.i(TAG, "call createPurchaseIntent");
-        Task<PurchaseIntentResult> task = iapClient.createPurchaseIntent(createPurchaseIntentReq(type, productId));
+        Task<PurchaseIntentResult> task = mClient.createPurchaseIntent(createPurchaseIntentReq(type, productId));
         task.addOnSuccessListener(new OnSuccessListener<PurchaseIntentResult>() {
             @Override
             public void onSuccess(PurchaseIntentResult result) {
@@ -201,32 +178,6 @@ public class IapRequestHelper {
             @Override
             public void onFailure(Exception e) {
                 Log.e(TAG, "createPurchaseIntent, fail");
-                callback.onFail(e);
-
-            }
-        });
-    }
-
-    /**
-     * call this API to set the in-app product price and complete payment,
-     *        instead of obtaining the price from the PMS.
-     * @param iapClient IapClient instance to call the createPurchaseIntentWithPrice API.
-     * @param productItem In-app product to be paid.
-     * @param callback PurchaseIntentResultCallback
-     */
-    public static void createPurchaseIntentWithPrice(final IapClient iapClient, ProductItem productItem, final PurchaseIntentResultCallback callback) {
-        Log.i(TAG, "call createPurchaseIntentWithPrice");
-        Task<PurchaseIntentResult> task = iapClient.createPurchaseIntentWithPrice(IapRequestHelper.createPurchaseIntentWithPriceReq(productItem));
-        task.addOnSuccessListener(new OnSuccessListener<PurchaseIntentResult>() {
-            @Override
-            public void onSuccess(PurchaseIntentResult result) {
-                Log.i(TAG, "createPurchaseIntentWithPrice, success");
-                callback.onSuccess(result);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.e(TAG, "createPurchaseIntentWithPrice, fail");
                 callback.onFail(e);
             }
         });
@@ -256,7 +207,7 @@ public class IapRequestHelper {
 
     /**
      * query information about all subscribed in-app products, including consumables, non-consumables, and auto-renewable subscriptions.</br>
-     * If consumables are returned, the system needs to deliver them and calls the consumeOwnedPurchase API to consume the products.
+     * If consumables are returned, the system needs to deliver them and calls the obtainOwnedPurchases API to consume the products.
      * If non-consumables are returned, the in-app products do not need to be consumed.
      * If subscriptions are returned, all existing subscription relationships of the user under the app are returned.
      * @param mClient IapClient instance to call the obtainOwnedPurchases API.
@@ -271,14 +222,13 @@ public class IapRequestHelper {
         task.addOnSuccessListener(new OnSuccessListener<OwnedPurchasesResult>() {
             @Override
             public void onSuccess(OwnedPurchasesResult result) {
-                Log.i(TAG, "obtainOwnedPurchases, success");
+                Log.i(TAG, "obtainOwnedPurchases success");
                 callback.onSuccess(result);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                Log.e(TAG, "obtainOwnedPurchases, fail");
+                Log.e(TAG, "obtainOwnedPurchases fail");
                 callback.onFail(e);
             }
         });
@@ -299,21 +249,21 @@ public class IapRequestHelper {
         task.addOnSuccessListener(new OnSuccessListener<OwnedPurchasesResult>() {
             @Override
             public void onSuccess(OwnedPurchasesResult result) {
-                Log.i(TAG, "obtainOwnedPurchaseRecord, success");
+                Log.i(TAG, "obtainOwnedPurchaseRecord success");
                 callback.onSuccess(result);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                Log.e(TAG, "obtainOwnedPurchaseRecord, fail");
+                Log.e(TAG, "obtainOwnedPurchaseRecord fail");
                 callback.onFail(e);
             }
         });
     }
 
     /**
-     * Consume all the unconsumed purchases with priceType 0.
+     * consume all the unconsumed purchases with priceType 0.
      * @param iapClient IapClient instance to call the consumeOwnedPurchase API.
      * @param purchaseToken which is generated by the Huawei payment server during product payment and returned to the app through InAppPurchaseData.
      */
@@ -323,7 +273,7 @@ public class IapRequestHelper {
         task.addOnSuccessListener(new OnSuccessListener<ConsumeOwnedPurchaseResult>() {
             @Override
             public void onSuccess(ConsumeOwnedPurchaseResult result) {
-                // Consume success.
+                // Consume success
                 Log.i(TAG, "consumeOwnedPurchase success");
             }
         }).addOnFailureListener(new OnFailureListener() {

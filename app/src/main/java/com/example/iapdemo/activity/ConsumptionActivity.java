@@ -19,7 +19,6 @@ package com.example.iapdemo.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,14 +27,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.iapdemo.adapter.ProductListAdapter;
-import com.example.iapdemo.callback.ProductInfoCallback;
 import com.example.iapdemo.callback.PurchaseIntentResultCallback;
 import com.example.iapdemo.callback.QueryPurchasesCallback;
+import com.example.iapdemo.callback.ProductInfoCallback;
 import com.example.iapdemo.common.CipherUtil;
 import com.example.iapdemo.common.Constants;
 import com.example.iapdemo.common.ExceptionHandle;
 import com.example.iapdemo.common.IapRequestHelper;
-import com.example.iapdemo.common.ProductItem;
 import com.example.iapdemo.common.DeliveryUtils;
 import com.example.iapdemo.common.Utils;
 import com.huawei.hms.iap.Iap;
@@ -47,8 +45,8 @@ import com.huawei.hms.iap.entity.ProductInfo;
 import com.huawei.hms.iap.entity.ProductInfoResult;
 import com.huawei.hms.iap.entity.PurchaseIntentResult;
 import com.huawei.hms.iap.entity.PurchaseResultInfo;
-import com.huawei.hms.iap.util.IapClientHelper;
 import com.huawei.hms.support.api.client.Status;
+
 import com.iapdemo.huawei.R;
 
 import org.json.JSONException;
@@ -62,14 +60,11 @@ public class ConsumptionActivity extends Activity {
 
     // consumable product.
     private ListView consumableProductsListview;
-    private List<ProductItem> consumableProducts = new ArrayList<ProductItem>();
+    private List<ProductInfo> consumableProducts = new ArrayList<ProductInfo>();
     private ProductListAdapter adapter;
     private Button purchaseHisBtn;
 
     private IapClient mClient;
-
-    // Record the product that the user is purchasing.
-    private static ProductItem productItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +84,7 @@ public class ConsumptionActivity extends Activity {
         consumableProductsListview = (ListView) findViewById(R.id.consumable_product_list1);
         consumableProductsListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                gotoBuy(position);
+                buy(position);
 
             }
         });
@@ -106,19 +101,6 @@ public class ConsumptionActivity extends Activity {
     }
 
     private void queryProducts() {
-        // Add non-managed products.
-        String productId = "CustomizedCProduct01";
-        ProductItem item = new ProductItem(productId);
-        item.setNumOfGems(10);
-        item.setProductName("10宝石");
-        item.setIsCustomized(true);
-        item.setPrice("0.30");
-        item.setCurrency("CNY");
-        item.setCountry("CN");
-        item.setCurrencySymbol("¥");
-        consumableProducts.add(item);
-
-        // Obtain the products managed in AppGallery Connect.
         List<String> productIds = new ArrayList<String>();
         productIds.add("CProduct01");
         IapRequestHelper.obtainProductInfo(mClient, productIds, IapClient.PriceType.IN_APP_CONSUMABLE, new ProductInfoCallback() {
@@ -129,11 +111,7 @@ public class ConsumptionActivity extends Activity {
                     return;
                 }
                 if (result.getProductInfoList() != null) {
-                    // to show product information
-                    for (ProductInfo productInfo : result.getProductInfoList()) {
-                        ProductItem productItem = new ProductItem(productInfo);
-                        consumableProducts.add(productItem);
-                    }
+                    consumableProducts = result.getProductInfoList();
                 }
                 showProducts();
             }
@@ -196,20 +174,20 @@ public class ConsumptionActivity extends Activity {
                     return;
                 }
                 String purchaseToken = inAppPurchaseDataBean.getPurchaseToken();
-                String tmpProductId = inAppPurchaseDataBean.getProductId();
+                String productId = inAppPurchaseDataBean.getProductId();
                 if (DeliveryUtils.isDelivered(ConsumptionActivity.this, purchaseToken)) {
-                    Utils.showMessage(this, tmpProductId + " has been delivered");
+                    Utils.showMessage(this, productId + " has been delivered");
                     IapRequestHelper.consumeOwnedPurchase(mClient, purchaseToken);
                 } else {
-                    if (DeliveryUtils.deliverProduct(this, tmpProductId, purchaseToken)) {
+                    if (DeliveryUtils.deliverProduct(this, productId, purchaseToken)) {
                         Log.i(TAG, "delivery success");
-                        Utils.showMessage(this, tmpProductId + " delivery success");
+                        Utils.showMessage(this, productId + " delivery success");
                         updateNumberOfGems();
                         // To consume the product after successfully delivering.
                         IapRequestHelper.consumeOwnedPurchase(mClient, purchaseToken);
                     } else {
-                        Log.e(TAG, tmpProductId + " delivery fail");
-                        Utils.showMessage(this, tmpProductId + " delivery fail");
+                        Log.e(TAG, productId + " delivery fail");
+                        Utils.showMessage(this, productId + " delivery fail");
                     }
                 }
 
@@ -228,29 +206,21 @@ public class ConsumptionActivity extends Activity {
         countTextView.setText(countOfGems);
     }
 
-    private void gotoBuy(int index) {
-        ProductItem productItem = consumableProducts.get(index);
-        if (productItem.getIsCustomized()) {
-            buyWithPrice(productItem);
-        } else {
-            buy(productItem.getProductInfo().getProductId());
-        }
-    }
-
-    private void buy(String productId) {
-        IapRequestHelper.createPurchaseIntent(mClient, productId, IapClient.PriceType.IN_APP_CONSUMABLE, new PurchaseIntentResultCallback() {
+    private void buy(int index) {
+        ProductInfo productInfo = consumableProducts.get(index);
+        IapRequestHelper.createPurchaseIntent(mClient, productInfo.getProductId(), IapClient.PriceType.IN_APP_CONSUMABLE, new PurchaseIntentResultCallback() {
             @Override
             public void onSuccess(PurchaseIntentResult result) {
                 if (result == null) {
-                    Log.d(TAG, "result is null");
+                    Log.e(TAG, "result is null");
                     return;
                 }
                 Status status = result.getStatus();
                 if (status == null) {
-                    Log.d(TAG, "status is null");
+                    Log.e(TAG, "status is null");
                     return;
                 }
-                // you should pull up the page to complete the payment process.
+                // You should pull up the page to complete the payment process.
                 IapRequestHelper.startResolutionForResult(ConsumptionActivity.this, status, Constants.REQ_CODE_BUY);
             }
 
@@ -258,57 +228,8 @@ public class ConsumptionActivity extends Activity {
             public void onFail(Exception e) {
                 int errorCode = ExceptionHandle.handle(ConsumptionActivity.this, e);
                 if (errorCode != ExceptionHandle.SOLVED) {
-                    Log.i(TAG, "createPurchaseIntent, returnCode: " + errorCode);
+                    Log.e(TAG, "createPurchaseIntent, returnCode: " + errorCode);
                     switch (errorCode) {
-                        case OrderStatusCode.ORDER_PRODUCT_OWNED:
-                            queryPurchases();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        });
-    }
-
-    private void buyWithPrice(ProductItem productItem) {
-        final String tag = "createPurchaseIntentWithPrice";
-        this.productItem = productItem;
-        IapRequestHelper.createPurchaseIntentWithPrice(mClient, productItem, new PurchaseIntentResultCallback() {
-            @Override
-            public void onSuccess(PurchaseIntentResult result) {
-                if (result == null) {
-                    Utils.showMessage(ConsumptionActivity.this, tag + getString(R.string.fail));
-                    return;
-                }
-                Status status = result.getStatus();
-                if (status == null || status.getResolution() == null) {
-                    Utils.showMessage(ConsumptionActivity.this, tag + getString(R.string.fail));
-                    return;
-                }
-                // verify signature, and pull up cashier page.
-                boolean isSuccess = CipherUtil.doCheck(result.getPaymentData(), result.getPaymentSignature(), CipherUtil.getPublicKey());
-                if (isSuccess) {
-                    IapRequestHelper.startResolutionForResult(ConsumptionActivity.this, status, Constants.REQ_CODE_BUYWITHPRICE);
-                } else {
-                    // Verify signature fail.
-                    Utils.showMessage(ConsumptionActivity.this, getString(R.string.verify_signature_fail));
-                }
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                Utils.showMessage(ConsumptionActivity.this, "createPurchaseIntentWithPrice, " + e.getMessage());
-                Log.e(TAG, "createPurchaseIntentWithPrice, " + e.getMessage());
-                int errorCode = ExceptionHandle.handle(ConsumptionActivity.this, e);
-                if (errorCode != ExceptionHandle.SOLVED) {
-                    // handle error scenarios.
-                    switch(errorCode) {
-                        // Account not logged in.
-                        case OrderStatusCode.ORDER_HWID_NOT_LOGIN:
-                        // User has not accepted the payment agreement.
-                        case OrderStatusCode.ORDER_NOT_ACCEPT_AGREEMENT:
-                            break;
                         case OrderStatusCode.ORDER_PRODUCT_OWNED:
                             queryPurchases();
                             break;
@@ -325,13 +246,13 @@ public class ConsumptionActivity extends Activity {
         Log.i(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Constants.REQ_CODE_BUY || requestCode == Constants.REQ_CODE_BUYWITHPRICE) {
+        if (requestCode == Constants.REQ_CODE_BUY) {
             if (data == null) {
                 Log.e(TAG, "data is null");
                 return;
             }
-            PurchaseResultInfo purchaseResultInfo = Iap.getIapClient(this).parsePurchaseResultInfoFromIntent(data);
-            switch(purchaseResultInfo.getReturnCode()) {
+            PurchaseResultInfo purchaseIntentResult = Iap.getIapClient(this).parsePurchaseResultInfoFromIntent(data);
+            switch(purchaseIntentResult.getReturnCode()) {
                 case OrderStatusCode.ORDER_STATE_CANCEL:
                     Utils.showMessage(ConsumptionActivity.this, "Order has been canceled!");
                     break;
@@ -340,24 +261,10 @@ public class ConsumptionActivity extends Activity {
                     queryPurchases();
                     break;
                 case OrderStatusCode.ORDER_STATE_SUCCESS:
-                    deliverProduct(purchaseResultInfo.getInAppPurchaseData(), purchaseResultInfo.getInAppDataSignature());
+                    deliverProduct(purchaseIntentResult.getInAppPurchaseData(), purchaseIntentResult.getInAppDataSignature());
                     break;
                 default:
                     break;
-            }
-            return;
-        }
-
-        if (requestCode == Constants.REQ_CODE_LOGIN || requestCode == Constants.REQ_CODE_BUYWITHPRICE_CONTINUE) {
-            int returnCode = IapClientHelper.parseRespCodeFromIntent(data);
-            if (data != null) {
-                returnCode = data.getIntExtra("returnCode", -1);
-            }
-            if (returnCode == OrderStatusCode.ORDER_STATE_SUCCESS) {
-                // if success, you can call buyWithPrice API again
-                buyWithPrice(productItem);
-            } else {
-                Log.e(TAG, getString(R.string.cancel));
             }
             return;
         }

@@ -53,7 +53,7 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.bill_listview).setVisibility(View.GONE);
         billListView = findViewById(R.id.bill_listview);
-        setTitle(R.string.purchase_history_title);
+
     }
 
     @Override

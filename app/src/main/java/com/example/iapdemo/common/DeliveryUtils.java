@@ -33,9 +33,7 @@ public class DeliveryUtils {
 
     public static Map<String, Integer> getNumOfGems() {
         Map<String, Integer> map = new HashMap<String, Integer>();
-
         map.put("CProduct01", 5);
-        map.put("CustomizedCProduct01", 10);
 
         return map;
     }
@@ -66,6 +64,7 @@ public class DeliveryUtils {
         Set<String> stringSet = sharedPreferences.getStringSet(PURCHASETOKEN_KEY, new HashSet<String>());
         stringSet.add(purchaseToken);
         editor.putStringSet(PURCHASETOKEN_KEY, stringSet);
+
         return editor.commit();
     }
 

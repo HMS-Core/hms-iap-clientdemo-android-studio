@@ -23,14 +23,6 @@ import com.huawei.hms.iap.entity.ProductInfo;
 
 import java.util.List;
 
-/**
- * 文 件 名: IapContract.java
- * 版    权: Copyright Huawei Tech.Co.Ltd. All Rights Reserved.
- * 描    述:
- *
- * @author z00455615
- * @since 2019/12/14, 16:24
- */
 public interface SubscriptionContract {
     interface View {
         void showProducts(List<ProductInfo> productInfoList);

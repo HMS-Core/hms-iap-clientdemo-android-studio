@@ -24,8 +24,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.iapdemo.common.ProductItem;
 import com.huawei.hms.iap.IapClient;
+import com.huawei.hms.iap.entity.ProductInfo;
 import com.iapdemo.huawei.R;
 
 import java.util.List;
@@ -33,21 +33,25 @@ import java.util.List;
 public class ProductListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<ProductItem> products;
+    private List<ProductInfo> productInfos;
 
-    public ProductListAdapter(Context context, List<ProductItem> products) {
+    public ProductListAdapter(Context context, List<ProductInfo> productInfos) {
         mContext = context;
-        this.products = products;
+        this.productInfos = productInfos;
+    }
+
+    public void add(ProductInfo item) {
+        this.productInfos.add(item);
     }
 
     @Override
     public int getCount() {
-        return products.size();
+        return productInfos.size();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ProductItem detail = products.get(position);
+        ProductInfo productInfo = productInfos.get(position);
         ProductListViewHolder holder = null;
         if (null == convertView) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_layout, null);
@@ -56,16 +60,13 @@ public class ProductListAdapter extends BaseAdapter {
         } else {
             holder = (ProductListViewHolder) convertView.getTag();
         }
-        if (detail.getIsCustomized()) {
-            holder.productName.setText(detail.getProductName());
-            holder.productPrice.setText(detail.getCurrencySymbol() + detail.getPrice());
-        } else {
-            holder.productName.setText(detail.getProductInfo().getProductName());
-            holder.productPrice.setText(detail.getProductInfo().getPrice());
-            if (detail.getProductInfo().getPriceType() == IapClient.PriceType.IN_APP_NONCONSUMABLE) {
-                holder.imageView.setVisibility(View.GONE);
-            }
+
+        holder.productName.setText(productInfo.getProductName());
+        holder.productPrice.setText(productInfo.getPrice());
+        if (productInfo.getPriceType() == IapClient.PriceType.IN_APP_NONCONSUMABLE) {
+            holder.imageView.setVisibility(View.GONE);
         }
+
         return convertView;
     }
 
@@ -76,11 +77,10 @@ public class ProductListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (products != null && products.size() > 0) {
-            return products.get(position);
+        if (productInfos != null && productInfos.size() > 0) {
+            return productInfos.get(position);
         }
         return null;
-
     }
 
     static class ProductListViewHolder {

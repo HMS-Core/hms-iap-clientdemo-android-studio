@@ -5,8 +5,7 @@ buildscript {
         maven {url 'http://developer.huawei.com/repo/'}
         google()
         jcenter()
-        mavenLocal()
-
+        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
@@ -22,11 +21,9 @@ allprojects {
         maven {url 'http://developer.huawei.com/repo/'}
         google()
         jcenter()
-        mavenLocal()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-

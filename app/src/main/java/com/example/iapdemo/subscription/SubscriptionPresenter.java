@@ -95,6 +95,8 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
         });
     }
 
+
+
     private void querySubscriptions(final SubscriptionContract.ResultCallback<Boolean> callback) {
         IapRequestHelper.obtainOwnedPurchases(Iap.getIapClient(view.getActivity()), IapClient.PriceType.IN_APP_SUBSCRIPTION, new QueryPurchasesCallback() {
             @Override
@@ -117,12 +119,12 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
 
         // clear local cache
         cacheOwnedPurchasesResult = null;
-        IapClient iapClient = Iap.getIapClient(view.getActivity());
-        IapRequestHelper.createPurchaseIntent(iapClient, productId, IapClient.PriceType.IN_APP_SUBSCRIPTION, new PurchaseIntentResultCallback() {
+        IapClient mClient = Iap.getIapClient(view.getActivity());
+        IapRequestHelper.createPurchaseIntent(mClient, productId, IapClient.PriceType.IN_APP_SUBSCRIPTION, new PurchaseIntentResultCallback() {
             @Override
             public void onSuccess(PurchaseIntentResult result) {
                 if (result == null) {
-                    Log.e(TAG, "GetBuyIntentResult is null");
+                    Log.e(TAG, "PurchaseIntentResult is null");
                     return;
                 }
 

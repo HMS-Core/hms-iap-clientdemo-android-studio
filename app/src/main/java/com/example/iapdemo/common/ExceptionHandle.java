@@ -63,7 +63,7 @@ public class ExceptionHandle {
                     Toast.makeText(activity, "Order account area not supported error!", Toast.LENGTH_SHORT).show();
                     return SOLVED;
                 case OrderStatusCode.ORDER_NOT_ACCEPT_AGREEMENT:
-                    IapRequestHelper.startResolutionForResult(activity, iapApiException.getStatus(), Constants.REQ_CODE_BUYWITHPRICE_CONTINUE);
+                    Toast.makeText(activity, "User does not agree the agreement", Toast.LENGTH_SHORT).show();
                     return SOLVED;
                 default:
                     // handle other error scenarios

@@ -17,14 +17,9 @@
 package com.example.iapdemo.common;
 
 public class Constants {
-    /** requestCode for pull up the pay page */
-    public static final int REQ_CODE_BUYWITHPRICE = 4001;
 
     /** requestCode for pull up the pmsPay page */
     public static final int REQ_CODE_BUY = 4002;
-
-    /** requestCode for pull up the login page or agreement page for createPurchaseIntentWithPrice interface*/
-    public static final int REQ_CODE_BUYWITHPRICE_CONTINUE = 4005;
 
     /** requestCode for pull up the login page for isEnvReady interface */
     public static final int REQ_CODE_LOGIN = 2001;

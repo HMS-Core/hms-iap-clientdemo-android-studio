@@ -14,7 +14,6 @@
  *    limitations under the License.
  */
 
-
 package com.example.iapdemo.common;
 
 import android.app.Activity;

@@ -26,7 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.iapdemo.activity.PurchaseHistoryActivity" />
+        <activity
+            android:name="com.example.iapdemo.activity.PurchaseHistoryActivity"
+            android:label="@string/purchase_history_title"/>
     </application>
 
 </manifest>

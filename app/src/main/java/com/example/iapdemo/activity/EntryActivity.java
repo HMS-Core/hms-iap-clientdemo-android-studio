@@ -13,6 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
 package com.example.iapdemo.activity;
 
 import android.content.Intent;
@@ -36,8 +37,8 @@ import com.iapdemo.huawei.R;
 
 public class EntryActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "EntryActivity";
-    private Button enterConsumablesTheme;
-    private Button enterNonConsumablesTheme;
+    private Button enterConsumableTheme;
+    private Button enterNonConsumableTheme;
     private Button enterSubsribeTheme;
 
     @Override
@@ -68,12 +69,12 @@ public class EntryActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         setContentView(R.layout.activity_entry);
-        enterConsumablesTheme = (Button) findViewById(R.id.enter_consumables_scene);
-        enterNonConsumablesTheme = (Button) findViewById(R.id.enter_non_consumables_scene);
+        enterConsumableTheme = (Button) findViewById(R.id.enter_consumables_scene);
+        enterNonConsumableTheme = (Button) findViewById(R.id.enter_non_consumables_scene);
         enterSubsribeTheme = (Button) findViewById(R.id.enter_subscription_scene);
 
-        enterConsumablesTheme.setOnClickListener(this);
-        enterNonConsumablesTheme.setOnClickListener(this);
+        enterConsumableTheme.setOnClickListener(this);
+        enterNonConsumableTheme.setOnClickListener(this);
         enterSubsribeTheme.setOnClickListener(this);
     }
 
