@@ -11,15 +11,15 @@
         android:roundIcon="@drawable/iap"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.iapdemo.activity.NonConsumptionActivity"
+        <activity android:name="com.huawei.iapdemo.activity.NonConsumptionActivity"
             android:label="@string/hidden_level"></activity>
         <activity
-            android:name="com.example.iapdemo.activity.ConsumptionActivity"
+            android:name="com.huawei.iapdemo.activity.ConsumptionActivity"
             android:theme="@style/NoActionBar" >
         </activity>
 
-        <activity android:name="com.example.iapdemo.subscription.SubscriptionActivity"></activity>
-        <activity android:name="com.example.iapdemo.activity.EntryActivity">
+        <activity android:name="com.huawei.iapdemo.subscription.SubscriptionActivity"></activity>
+        <activity android:name="com.huawei.iapdemo.activity.EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.iapdemo.activity.PurchaseHistoryActivity"
+            android:name="com.huawei.iapdemo.activity.PurchaseHistoryActivity"
             android:label="@string/purchase_history_title"/>
     </application>
 

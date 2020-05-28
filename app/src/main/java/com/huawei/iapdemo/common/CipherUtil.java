@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.example.iapdemo.common;
+package com.huawei.iapdemo.common;
 
 import android.text.TextUtils;
 import android.util.Base64;
@@ -29,12 +29,17 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 
+/**
+ * Signature related tools.
+ *
+ * @since 2019/12/9
+ */
 public class CipherUtil {
-    private static final String TAG = "HMS_LOG_CipherUtil";
+    private static final String TAG = "CipherUtil";
 
     private static final String SIGN_ALGORITHMS = "SHA256WithRSA";
 
-    private static final String publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhq5dfS3JJkugYdnasvQyDqwx9RKwySDmCLItVsSPcSAaxtioas2Fobdba8CleeE4vBRRqxHEUVnpa+JBo9xnzgEx0yX4Mo++wi7LERCO4WJLsuDgogPjPVFBw8W0VZgENNkjI7MiuCQwAXhCEurE4wxUudbKLdy15dphNba0BMQy6U3VJSmfLQOqoAFI5mz2TwzFuoCDVY3LlAzWZMtl/baNfHsZa4XKT7C3wSnrvXL+AoBUWfRtt3+JBtLDchhbcJT8KHa/7lXaXTx0yZIUq9J3gLKbPP+Z8EPxT0N/XLiXsWiDr+iKqZjpatys0TIgoWn547+1V2yneWxPRxc+0QIDAQAB";
+    private static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhq5dfS3JJkugYdnasvQyDqwx9RKwySDmCLItVsSPcSAaxtioas2Fobdba8CleeE4vBRRqxHEUVnpa+JBo9xnzgEx0yX4Mo++wi7LERCO4WJLsuDgogPjPVFBw8W0VZgENNkjI7MiuCQwAXhCEurE4wxUudbKLdy15dphNba0BMQy6U3VJSmfLQOqoAFI5mz2TwzFuoCDVY3LlAzWZMtl/baNfHsZa4XKT7C3wSnrvXL+AoBUWfRtt3+JBtLDchhbcJT8KHa/7lXaXTx0yZIUq9J3gLKbPP+Z8EPxT0N/XLiXsWiDr+iKqZjpatys0TIgoWn547+1V2yneWxPRxc+0QIDAQAB";
 
     /**
      * the method to check the signature for the data returned from the interface
@@ -84,10 +89,10 @@ public class CipherUtil {
     /**
      * get the publicKey of the application
      * During the encoding process, avoid storing the public key in clear text.
-     * @return
+     * @return publickey
      */
     public static String getPublicKey(){
-        return publicKey;
+        return PUBLIC_KEY;
     }
 
 }

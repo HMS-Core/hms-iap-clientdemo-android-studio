@@ -72,10 +72,17 @@ If the HMS is missing, the device will prompt you to install or upgrade HMS firs
 
 ## Configuration
 
-This demo come with pre-configured `agconnect-services.json`, HMS dependencies, signing keys and
-in-app products. These pre-configured settings are for demo purpose only, please refer to the
-[Documentation](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect)
-for guide of adopting Huawei IAP.
+1. Create an app in AppGallery Connect, and obtain the file of agconnect-services.json to add to the project. 
+
+2.  Configuring the app signature.
+    * Generate a signing certificate fingerprint and add the certificate file to the project.
+    * Add configuration to build.gradle. 
+
+    Please refer to the 
+[Configuring AppGallery Connect](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect) and [Integrating the HMS SDK](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-integrating-hms-sdk-v4)
+for guide of adopting Huawei IAP. 
+
+3. Replace the PUBLIC_KEY in the CipherUtil class with the public key of your application. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-verifying-signature-returned-result-v4).
 
 ## Tutorial
 
