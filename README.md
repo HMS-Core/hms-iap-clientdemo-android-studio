@@ -1,29 +1,20 @@
-# Huawei In-App Purchases (IAP) Demo
+# Huawei In-App Purchases (IAP)
 
 The iap_demo App demonstrates Huawei In-App Purchases (IAP) client APIs and usages.
 
 Documentation can be found at this
-[link](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-introduction).
+[link](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5).
 
 ## Table of Content
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Supported Environments](#supported-environments)
+- [Result](#result)
+  - [Purchasing consumable product](#purchasing-consumable-product)
+  - [Purchasing non-consumable product](#purchasing-non-consumable-product)
+  - [Purchasing auto-renewable subscription service](#purchasing-auto-renewable-subscription-service)
+- [Licensing](#licensing)
 
-- [Huawei In-App Purchases (IAP) Demo](#huawei-in-app-purchases-iap-demo)
-  - [Table of Content](#table-of-content)
-  - [Introduction](#introduction)
-  - [Environment requirement](#environment-requirement)
-    - [Develop requirement](#develop-requirement)
-    - [Runtime requirement](#runtime-requirement)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Tutorial](#tutorial)
-    - [Purchasing consumable product](#purchasing-consumable-product)
-    - [Purchasing non-consumable product](#purchasing-non-consumable-product)
-    - [Purchasing auto-renewable subscription service](#purchasing-auto-renewable-subscription-service)
-  - [Code Examples](#code-examples)
-    - [Query purchased products](#query-purchased-products)
-    - [Make Purchases](#make-purchases)
-    - [Jump to subscription management and detail pages](#jump-to-subscription-management-and-detail-pages)
-  - [Licensing](#licensing)
 
 ## Introduction
 
@@ -35,62 +26,39 @@ auto-renewable subscription.
 
 * Non-consumable : Non-consumables can be only purchased once and do not expire.
 
-* Auto-renewable subscription : Once purchased, Users can access to value-added functions
-    or content in a specified period of time. The subscriptions will automatically renew on
-    a recurring basis until users decide to cancel.
+* Auto-renewable subscription : Once purchased, Users can access to value-added functions or content in a specified period of time. The subscriptions will automatically renew on a recurring basis until users decide to cancel.
 
-This demo app provides all 3 types of product to demonstrate the procedure and capability of
-Huawei IAP.
+This demo app provides all 3 types of product to demonstrate the procedure and capability of Huawei IAP.
 
-## Environment requirement
+Disclaimer: The demo only demonstrates the purchase procedure, and it does not have a real use of purchased products.
 
-### Develop requirement
+## Getting Started
 
-To be able to develop, build and debug this demo, you will need at least the following environment:
+   1. Check whether the Android studio development environment is ready. Open the sample code project directory with file "build.gradle" in Android Studio. 
 
-* a connection to Internet, for downloading package dependencies form Huawei and Google
+   2. Finish the configuration in AppGallery Connect. 
+   See details: [Configuring AppGallery Connect](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/config-agc-0000001050033072-V5)
 
-* a compatible IDE, Android Studio is recommended.
+   3. Add your products on the AppGallery Connect. See details: [Configuring In-App Product Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/config-product-0000001050033076-V5)
 
-* a gradle installation will be downloaded when you use command line gradle wrapper or
-    open downloaded folder in compatible IDE
+   4. To build this demo, please first import the demo in the Android Studio (3.x+).
 
-* an Android SDK installation, API version 28 or above is recommended.
+   5. Configure the sample code:
+      - Download the file "agconnect-services.json" of the app on AGC, and add the file to the app root directory(\app) of the demo. 
+      - Add the certificate file to the project and add your configuration to  in the app-level `build.gradle` file. 
+      - Open the `AndroidManifest` file and change the value of package to your app package name.  
+      - Replace the PUBLIC_KEY in the CipherUtil class with the public key of your app. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/HMSCore-Guides-V5/query-payment-info-0000001050166299-V5).
+      - Replace products in the demo with your products.
 
-### Runtime requirement
+   6. Run the sample on your Android device or emulator.
 
-To be able to run this demo, you will need an Android device with EMUI 5.0 or above,
-Android 4.4 and above, with Huawei Mobile Service (HMS) pre-installed.
+## Supported Environments
+   Android SDK Version >= 22 and JDK version >= 1.8 is recommended.
 
-If the HMS is missing, the device will prompt you to install or upgrade HMS first on calling IAP SDK.
-
-## Installation
-
-1. Clone or download this project and open the downloaded folder in Android Studio or compatible IDE.
-
-2. Use IDE's functionality to install configured project on to your device.
-
-## Configuration
-
-1. Create an app in AppGallery Connect, and obtain the file of agconnect-services.json to add to the project. 
-
-2.  Configuring the app signature.
-    * Generate a signing certificate fingerprint and add the certificate file to the project.
-    * Add configuration to build.gradle. 
-
-    Please refer to the 
-[Configuring AppGallery Connect](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect) and [Integrating the HMS SDK](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-integrating-hms-sdk-v4)
-for guide of adopting Huawei IAP. 
-
-3. Replace the PUBLIC_KEY in the CipherUtil class with the public key of your application. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-verifying-signature-returned-result-v4).
-
-## Tutorial
-
+## Result
 Once you start the demo, you should be able to see the following page.
 
 <img src="images/homepage.jpg" alt="demo home page" height="600"/>
-
-Disclaimer: The demo only demonstrates the purchase procedure, and it does not have a real use of purchased products.
 
 ### Purchasing consumable product
 
@@ -104,7 +72,7 @@ The demo provides *gem* as an example of consumable product.
 
 2. Tap **5 gems**, the demo will call the `createPurchaseIntent` API,
     and jump to the checkout page which is provided by IAP Service.
-
+    
     <img src="images/consumable/checkout-page.jpg" alt="consumable payment selection" height="600"/>
 
 3. Once payment finishes, the consumable demo will increase user's gems counter
@@ -117,9 +85,6 @@ The demo provides *gem* as an example of consumable product.
     when you re-enter the page. (Using `obtainOwnedPurchases` API to obtain consumable
     purchases and `consumeOwnedPurchase` to retry consuming purchases)
 
-    Note: In production you should validate the result on server side (deliver the purchase)
-    before calling `consumeOwnedPurchase`.
-
 4. Tap **History**, the demo will call the `obtainOwnedPurchaseRecord` API to obtain the purchase history.
 
     <img src="images/consumable/purchase-history.jpg" alt="consumable purchase history" height="600"/>
@@ -128,12 +93,9 @@ The demo provides *gem* as an example of consumable product.
 
 The demo provides *hidden level* as an example of non-consumable product.
 
-1. Tap the **Non-consumable product**, you should be able to see the home page for non-consumable demo.
-    The demo will call the `obtainOwnedPurchases` API to obtain purchased non-consumable product.
+1. Tap the **Non-consumable product**, you should be able to see the home page for non-consumable demo. The demo will call the `obtainOwnedPurchases` API to obtain purchased non-consumable product.
 
-2. Assuming you have not purchased the *hidden level*, you will see the following screenshot.
-    Tap **hidden level** to start the purchase procedure (which is the same as purchasing consumable product).
-
+2. Assuming you have not purchased the *hidden level*, you will see the following screenshot. Tap **hidden level** to start the purchase procedure (which is the same as purchasing consumable product).
     <img src="images/non-consumable/not-purchased.jpg" alt="hidden level not purchased" height="600"/>
 
 3. After the purchase finishes (Or you have purchased the *hidden level* before),
@@ -176,45 +138,6 @@ each contains 2 options of auto-renewable subscription.
     date.
 
     <img src="images/subscription/edit-sub-plan.jpg" alt="edit subscription" height="600"/>
-
-## Code Examples
-
-### Query purchased products
-
-Query the user's ordered product information according to the query type.
-
-The products include consumable products, non-consumable products and auto-renewable subscription products.
-
-When the type set to subscription, `obtainOwnedPurchase` returns subscriptions that the user
-has in this application, including the following subscription status:
-
-- Renewal (normal state, subscription will be renewed in the next cycle)
-
-- Expires (the renewal has been canceled, after this cycle becomes expired, there will be no renewal for the next cycle)
-
-- Expired (subscription is invalid, but can still be found in the subscription history)
-
-For more detail, please refer to `IapRequestHelper.java`.
-
-### Make Purchases
-
-Make purchase according to the purchase type and product ID type.
-
-The products include consumable products, non-consumable products, and auto-renewable subscription products.
-
-For more detail, please refer to `IapRequestHelper.java`.
-
-### Jump to subscription management and detail pages
-
-Your application can jump to the *Manage Subscription* Page and *Subscription Details* Page via url schemes.
-
-If the parameter `sku` is empty, the app will jump to the management subscription page.
-The page displays the list of products that the current user has subscribed to in your application.
-
-If the parameter `sku` is not empty, it jumps to the subscription details page.
-The detail page will also display other product information for the same product subscription group.
-
-For more detail, please refer to `IapRequestHelper.java`.
 
 ## Licensing
 
