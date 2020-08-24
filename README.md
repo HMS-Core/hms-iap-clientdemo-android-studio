@@ -1,6 +1,6 @@
-# Huawei In-App Purchases (IAP)
+# HUAWEI In-App Purchases (IAP)
 
-The iap_demo App demonstrates Huawei In-App Purchases (IAP) client APIs and usages.
+The iap_demo App demonstrates HUAWEI In-App Purchases (IAP) client APIs and usages.
 
 Documentation can be found at this
 [link](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5).
@@ -18,7 +18,7 @@ Documentation can be found at this
 
 ## Introduction
 
-Huawei In-App Purchases provides 3 types of product: consumable, non-consumable and
+HUAWEI In-App Purchases provides 3 types of product: consumable, non-consumable and
 auto-renewable subscription.
 
 * Consumable : Consumables are product that can be consumed once. When consumed, it's
@@ -28,7 +28,7 @@ auto-renewable subscription.
 
 * Auto-renewable subscription : Once purchased, Users can access to value-added functions or content in a specified period of time. The subscriptions will automatically renew on a recurring basis until users decide to cancel.
 
-This demo app provides all 3 types of product to demonstrate the procedure and capability of Huawei IAP.
+This demo app provides all 3 types of product to demonstrate the procedure and capability of HUAWEI IAP.
 
 Disclaimer: The demo only demonstrates the purchase procedure, and it does not have a real use of purchased products.
 
@@ -96,6 +96,7 @@ The demo provides *hidden level* as an example of non-consumable product.
 1. Tap the **Non-consumable product**, you should be able to see the home page for non-consumable demo. The demo will call the `obtainOwnedPurchases` API to obtain purchased non-consumable product.
 
 2. Assuming you have not purchased the *hidden level*, you will see the following screenshot. Tap **hidden level** to start the purchase procedure (which is the same as purchasing consumable product).
+
     <img src="images/non-consumable/not-purchased.jpg" alt="hidden level not purchased" height="600"/>
 
 3. After the purchase finishes (Or you have purchased the *hidden level* before),
@@ -138,6 +139,14 @@ each contains 2 options of auto-renewable subscription.
     date.
 
     <img src="images/subscription/edit-sub-plan.jpg" alt="edit subscription" height="600"/>
+
+## Question or issues
+If you have questions about how to use HMS samples, try the following options:
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with 
+**huawei-mobile-services**.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+
+If you run into a bug in our samples, please submit an [issue](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/issues) to the Repository. Even better you can submit a [Pull Request](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/pulls) with a fix.
 
 ## Licensing
 

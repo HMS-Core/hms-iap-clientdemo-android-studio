@@ -2,32 +2,23 @@
 
 本章节主要介绍接入华为应用内支付的客户端开发步骤，帮助您快速了解华为支付提供的客户端接口及其使用方法。
 
-点击[此处](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/iap-introduction)了解更多。
+点击[此处](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5)了解更多。
 
 
 ## 目录
-
-- [华为应用内支付服务客户端示例代码](#华为应用内支付服务客户端示例代码)
-  - [目录](#目录)
   - [简介](#简介)
+  - [开发准备](#开发准备)
   - [环境要求](#环境要求)
-    - [开发环境](#开发环境)
-    - [运行环境](#运行环境)
-  - [安装](#安装)
-  - [配置](#配置)
-  - [使用示例](#使用示例)
+  - [运行结果](#运行结果)
     - [购买消耗型商品](#购买消耗型商品)
     - [购买非消耗型商品](#购买非消耗型商品)
     - [购买订阅型商品](#购买订阅型商品)
-  - [示例代码](#示例代码)
-    - [查询已购商品](#查询已购商品)
-    - [购买商品](#购买商品)
-    - [提供订阅管理的页面跳转](#提供订阅管理的页面跳转)
+  - [反馈](#反馈)
   - [授权许可](#授权许可)
 
 ## 简介
 
-华为应用内支付服务（Huawei In-App Purchases）支持3种商品，包括消耗型商品、非消耗型商品和订阅型商品。
+华为应用内支付服务（HUAWEI In-App Purchases）支持3种商品，包括消耗型商品、非消耗型商品和订阅型商品。
 
 * 消耗商品：仅能使用一次，消耗使用后即刻失效，需再次购买。
 
@@ -37,57 +28,38 @@
 
 本Demo将基于这3种商品来演示华为应用内支付服务的接入过程和功能。
 
+本demo仅演示商品购买过程，并未实际使用购买的商品。
+
+## 开发准备
+
+1. 检查Android Studio开发环境是否准备就绪。如果是，则使用Android Studio打开示例代码工程路径下的build.gradle文件。
+2. 在AppGallery Connect中创建应用并配置应用信息。详情请参见：[配置AppGallery Connect](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/config-agc-0000001050033072-V5)。
+3. 在AppGallery Connect中添加商品信息。详情请参见：[配置商品信息](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/config-product-0000001050033076-V5)。
+4. 在Android Studio（3.0及以上版本）导入demo，再进行构建。
+5. 配置示例代码：
+  
+   * 在AppGallery Connect中下载应用的agconnect-services.json文件，把该文件添加至本demo的应用根目录(\app)中。
+   * 添加证书文件，在应用级build.gradle文件中添加配置。
+   * 打开AndroidManifest文件，修改package为您的应用包名
+   * 将CipherUtil类中的PUBLIC_KEY替换为创建应用的公钥。获取公钥详情，参考查询支付服务信息
+   * 将本demo中的商品替换为你的商品。
+6. 在Android设备或模拟机上运行该示例代码。
+
 ## 环境要求
 
-### 开发环境
+推荐使用Android SDK 22版本及以上、JDK版本1.8及以上。
 
-开发者需要以下环境进行示例应用开发、构建和调试：
-
-* 网络连接正常，可以从华为或谷歌下载软件依赖包
-
-* 安装兼容的集成开发工具，推荐使用Android Studio 
-
-* 使用gradle wrapper命令行方式或在IDE环境中，下载安装gradle
-
-* 安装Android SDK，API版本推荐28及以上
-
-### 运行环境
-
-运行Demo的设备必须是安装了HMS Core的EMUI 3.0及以上版本、安卓4.4及以上版本的安卓设备。
-
-如未安装HMS Core，设备将在调用IAP SDK时提示您首先安装或升级HMS。
-
-
-## 安装
-
-1. 从GitHub克隆或下载本项目，通过Android Studio或其他兼容的IDE打开下载的工程文件。
-
-2. 使用IDE将配置好的工程安装到安卓设备。
-
-## 配置
-
-1. 在AppGallery Connect中创建一个应用，获取agconnect-services.json文件，将其添加至项目中。
-
-2.	配置应用签名。
-   * 生成签名证书指纹，将证书文件添加至项目中。
-   * 配置build.gradle文件。
-详情参考[AppGallery Connect配置](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/iap-configuring-appGallery-connect)和[集成HMS SDK](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/iap-integrating-hms-sdk-v4)。
-
-3.	将CipherUtil类中的PUBLIC_KEY替换为创建应用的公钥。获取公钥详情参考[查询支付服务信息](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/appgallery_querypaymentinfo)。
-
-## 使用示例
+## 运行结果
 
 Demo运行后，会出现如下页面。
 
 <img src="images/homepage.jpg" alt="demo home page" height="600"/>
 
-声明：本Demo仅演示商品购买过程，并未实际使用购买的商品。
-
 ### 购买消耗型商品
 
 以游戏中的*gem*，演示消耗型商品购买。
 
-1. 点击**Consumable products**，可以看到购买消耗型商品的主页。调用`obtainProductInfo`接口，获取此类商品的详细信息。（且调用`consumeOwnedPurchase`接口，如下所示。）
+1. 点击**Consumable products**，可以看到购买消耗型商品的主页。调用`obtainProductInfo`接口，获取此类商品的详细信息。
 
  <img src="images/consumable/homepage.jpg" alt="consumable demo page" height="600"/>
 
@@ -97,14 +69,13 @@ Demo运行后，会出现如下页面。
 
 3. 付款成功后，用户钻石数量增加，并会调用`consumeOwnedPurchase`接口，通知华为应用内支付服务端用户已完成消耗。
 
-    <img src="images/consumable/purchase-history.jpg" alt="consumable purchase history" height="600"/>
+    <img src="images/consumable/purchase-result.jpg" alt="gem purchase result" height="600"/>
 
 注意：如果付款成功后出现异常（如网络错误或流程终止），Demo将在您重新进入页面时尝试更新钻石数量。（调用`obtainOwnedPurchases`接口，获取已购消耗型商品的购买信息。调用`consumeOwnedPurchase`接口，消耗该商品。）
 
-注意：调用`consumeOwnedPurchase`接口前，您应先在服务器端确认商品是否已经发货。
-
 4. 点击**History**，Demo会调用`obtainOwnedPurchaseRecord`接口，获取购买历史。
-    
+
+    <img src="images/consumable/purchase-history.jpg" alt="consumable purchase history" height="600"/>
 
 ### 购买非消耗型商品
 
@@ -124,7 +95,7 @@ Demo以*hidden level*商品为例，演示非消耗型商品购买。
 
 Demo以*Service-One*和*Service-Two*为订阅群组进行演示，每个订阅组包含2个订阅选项。
 
-(如想了解更多关于订阅及订阅群组的信息，请查看相关[文档](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/iap-subscription-scenario).)
+(如想了解更多关于订阅及订阅群组的信息，请查看相关[文档](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/subscription-functions-0000001050130264).)
 
 1. 点击**Auto-renewable subscription**，可以看到订阅型商品的主页。调用`obtainOwnedPurchase`接口，获取购买的订阅商品信息。用户已订阅的商品将显示为ACTIVE。
 
@@ -144,45 +115,13 @@ Demo以*Service-One*和*Service-Two*为订阅群组进行演示，每个订阅�
 
     <img src="images/subscription/manage-sub.jpg" alt="subscription manage" height="600"/>
 
-5. 在订阅管理页面点击**Happy Subscribe**，可以编辑订阅商品，选择同一订阅组中的其他订阅商品，或点击**Manage Subscription**，取消订阅该商品。订阅商品在到期前一直有效。
+5. 在订阅管理页面点击**Happy Subscribe**，可以编辑订阅商品，选择同一订阅组中的其他订阅商品，或点击**UNSUBSCRIBE**，取消订阅该商品。订阅商品在到期前一直有效。
 
     <img src="images/subscription/edit-sub-plan.jpg" alt="edit subscription" height="600"/>
 
-## 示例代码
+## 反馈
 
-### 查询已购商品
-
-可以按类型查询用户订购的商品信息，商品包括消耗型商品，非消耗型商品和订阅型商品。
-
-查询订阅商品时，`obtainOwnedPurchase`接口返回应用中用户的订阅商品，包括如下订阅状态：
-
-- 续订 (订阅商品处于有效状态，下一次的续期也将按期进行扣费以续期。)
-
-- 到期 (订阅续期已被用户取消，将不会进行下一次的续期扣费。)
-
-- 已到期 (订阅商品处于失效状态，可从订阅历史中找到该商品。)
-
-详见`IapRequestHelper.java`文件。
-
-### 购买商品
-
-用户根据购买类型和商品ID进行购买。
-
-商品类型包括消耗型商品、非消耗型商品和订阅型商品。
-
-详见`IapRequestHelper.java`文件。
-
-
-### 提供订阅管理的页面跳转
-
-开发者的应用可以通过相应地址跳转到**管理订阅页面**和**编辑订阅**页面。
-
-如果`sku`参数为空，应用将跳转至管理订阅页面。该页面展示的是当前用户在开发者应用内已订阅的商品列表。
-
-如果`sku`参数不为空，应用将跳转至编辑订阅页面。该页面展示的是用户已在开发者应用订阅的某个商品详情，以及该商品所在订阅组的其他商品的信息。
-
-详见`IapRequestHelper.java`文件。
-
+如果在开发过程中碰到问题，可以到[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-iap)或者[华为开发者联盟论坛](https://developer.huawei.com/consumer/cn/forum/home)上发帖求助。
 
 ## 授权许可
 
