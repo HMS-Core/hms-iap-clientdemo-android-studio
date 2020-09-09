@@ -1,4 +1,5 @@
 # 华为应用内支付服务客户端示例代码
+[English](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio) | 中文
 
 本章节主要介绍接入华为应用内支付的客户端开发步骤，帮助您快速了解华为支付提供的客户端接口及其使用方法。
 
@@ -13,7 +14,7 @@
     - [购买消耗型商品](#购买消耗型商品)
     - [购买非消耗型商品](#购买非消耗型商品)
     - [购买订阅型商品](#购买订阅型商品)
-  - [反馈](#反馈)
+  - [技术支持](#技术支持)
   - [授权许可](#授权许可)
 
 ## 简介
@@ -119,9 +120,14 @@ Demo以*Service-One*和*Service-Two*为订阅群组进行演示，每个订阅�
 
     <img src="images/subscription/edit-sub-plan.jpg" alt="edit subscription" height="600"/>
 
-## 反馈
+## 技术支持
+如果您对HMS Core还处于评估阶段，可在[Reddit社区](https://www.reddit.com/r/HMSCore/)获取关于HMS Core的最新讯息，并与其他开发者交流见解。
 
-如果在开发过程中碰到问题，可以到[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-iap)或者[华为开发者联盟论坛](https://developer.huawei.com/consumer/cn/forum/home)上发帖求助。
+如果您对使用HMS示例代码有疑问，请尝试：
+- 开发过程遇到问题上[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services)，在[huawei-mobile-services]标签下提问，有华为研发专家在线一对一解决您的问题。
+- 到[华为开发者论坛](https://developer.huawei.com/consumer/cn/forum/blockdisplay?fid=18) HMS Core板块与其他开发者进行交流。
+
+如果您在尝试示例代码中遇到问题，请向仓库提交[issue](https://github.com/HMS-Core/hms-nearby-demo/issues)，也欢迎您提交[Pull Request](https://github.com/HMS-Core/hms-nearby-demo/pulls)。
 
 ## 授权许可
 
