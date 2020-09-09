@@ -1,4 +1,5 @@
 # HUAWEI In-App Purchases (IAP)
+English | [中文](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/blob/master/readme_zh.md)
 
 The iap_demo App demonstrates HUAWEI In-App Purchases (IAP) client APIs and usages.
 
