@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">IapDemo</string>
+
+    <string name="buy">buy</string>
+
+    <string name="consumable_products">消耗型商品</string>
+    <string name="non_consumable_products">非消耗型商品</string>
+    <string name="auto_renewable_subscription">订阅型商品</string>
+
+    <string name="external_error">外部错误</string>
+    <string name="cancel">用户取消</string>
+    <string name="fail">fail</string>
+
+    <string name="pay_fail">支付失败</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_success_signfail">支付成功，验签失败</string>
+    <string name="verify_signature_fail">验签失败</string>
+
+    <string name="gems_count_tips">当前宝石数量：&#160;</string>
+    <string name="purchase_gems">购买宝石</string>
+    <string name="purchase_history_title">购买历史</string>
+
+    <string name="hidden_level">隐藏关卡</string>
+    <string name="click_to_retry">点击重试</string>
+    <string name="hidden_level_has_been_purchsed">您已购买隐藏关卡。</string>
+
+    <string name="success_state">支付成功</string>
+    <string name="cancel_state">支付取消</string>
+    <string name="refund_state">交易失败，已退款</string>
+
+    <string name="active">正在使用</string>
+    <string name="service_one">服务1</string>
+    <string name="service_two">服务2</string>
+    <string name="manage_subscription">管理订阅</string>
+
+</resources>
