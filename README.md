@@ -33,6 +33,8 @@ This demo app provides all 3 types of product to demonstrate the procedure and c
 
 Disclaimer: The demo only demonstrates the purchase procedure, and it does not have a real use of purchased products.
 
+You also can use HMS Toolkit to quickly integrate the kit and run the demo project, as well as debug the app using a remote device for free. For details, please visit https://developer.huawei.com/consumer/en/doc/development/Tools-Guides/getting-started-0000001077381096.
+
 ## Getting Started
 
    1. Check whether the Android studio development environment is ready. Open the sample code project directory with file "build.gradle" in Android Studio. 
