@@ -42,9 +42,9 @@ import com.iapdemo.huawei.R;
  */
 public class EntryActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "EntryActivity";
-    private Button enterConsumablesTheme;
-    private Button enterNonConsumablesTheme;
-    private Button enterSubsribeTheme;
+    private Button enterConsumablesPageBtn;
+    private Button enterNonConsumablesPageBtn;
+    private Button enterSubsribePageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +74,13 @@ public class EntryActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         setContentView(R.layout.activity_entry);
-        enterConsumablesTheme = (Button) findViewById(R.id.enter_consumables_scene);
-        enterNonConsumablesTheme = (Button) findViewById(R.id.enter_non_consumables_scene);
-        enterSubsribeTheme = (Button) findViewById(R.id.enter_subscription_scene);
+        enterConsumablesPageBtn = (Button) findViewById(R.id.enter_consumables_scene);
+        enterNonConsumablesPageBtn = (Button) findViewById(R.id.enter_non_consumables_scene);
+        enterSubsribePageBtn = (Button) findViewById(R.id.enter_subscription_scene);
 
-        enterConsumablesTheme.setOnClickListener(this);
-        enterNonConsumablesTheme.setOnClickListener(this);
-        enterSubsribeTheme.setOnClickListener(this);
+        enterConsumablesPageBtn.setOnClickListener(this);
+        enterNonConsumablesPageBtn.setOnClickListener(this);
+        enterSubsribePageBtn.setOnClickListener(this);
     }
 
     @Override
@@ -110,6 +110,7 @@ public class EntryActivity extends AppCompatActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.REQ_CODE_LOGIN) {
+            // Parse the returnCode from intent.
             int returnCode = IapClientHelper.parseRespCodeFromIntent(data);
             Log.i(TAG,"onActivityResult, returnCode: " + returnCode);
             if (returnCode == OrderStatusCode.ORDER_STATE_SUCCESS) {

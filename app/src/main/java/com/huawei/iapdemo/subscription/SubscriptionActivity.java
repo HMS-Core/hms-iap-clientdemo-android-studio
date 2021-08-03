@@ -40,7 +40,11 @@ import java.util.List;
 public class SubscriptionActivity extends Activity implements SubscriptionContract.View {
 
     private static final String TAG = "SubscriptionActivity";
+
+    // The product ID array of products to be purchased.
     private static final String[] SUBSCRIPTION_PRODUCT = new String[]{"demosub101", "demosub102", "demosub201", "demosub202"};
+
+    // Presenter of this page, which is used to process data interactions.
     private SubscriptionContract.Presenter presenter;
 
     @Override
@@ -80,6 +84,11 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
     }
 
 
+    /**
+     * Show subscription products.
+     *
+     * @param productInfos Product list.
+     */
     @Override
     public void showProducts(List<ProductInfo> productInfos) {
         if (null == productInfos) {
@@ -95,16 +104,24 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
         findViewById(R.id.content).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Update product purchase status.
+     *
+     * @param ownedPurchasesResult Purchases result.
+     */
     @Override
     public void updateProductStatus(OwnedPurchasesResult ownedPurchasesResult) {
         for (String productId : SUBSCRIPTION_PRODUCT) {
             View view = getView(productId);
             Button button = view.findViewById(R.id.action);
             button.setTag(productId);
+            // Check whether to offer subscription service.
             if (SubscriptionUtils.shouldOfferService(ownedPurchasesResult, productId)) {
+                // Offer subscription service.
                 button.setText(R.string.active);
                 button.setOnClickListener(getDetailActionListener());
             } else {
+                // Show the purchase Entry.
                 button.setText(R.string.buy);
                 button.setOnClickListener(getBuyActionListener());
             }
@@ -112,13 +129,19 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
     }
 
     /**
-     * Jump to manage subscription page
-     * @param view the view which has been clicked
+     * Jump to manage subscription page.
+     *
+     * @param view The view which has been clicked.
      */
     public void manageSubscription(View view) {
         presenter.showSubscription("");
     }
 
+    /**
+     * Show products on the page.
+     *
+     * @param productInfo Contains details of a product.
+     */
     private void showProduct(ProductInfo productInfo) {
         View view = getView(productInfo.getProductId());
 
@@ -134,6 +157,13 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
         }
     }
 
+    /**
+     * Obtains the layout of the product.
+     *
+     * @param productId ProductId of the product.
+     *
+     * @return View
+     */
     private View getView(String productId) {
         View view = null;
         if (SUBSCRIPTION_PRODUCT[0].equals(productId)) {
@@ -157,6 +187,11 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
         return this;
     }
 
+    /**
+     * Obtains the listener of the BUY button.
+     *
+     * @return View.OnClickListener
+     */
     private View.OnClickListener getBuyActionListener() {
         return new View.OnClickListener() {
             @Override
@@ -170,6 +205,11 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
         };
     }
 
+    /**
+     * Obtains the listener of the ACTIVE button.
+     *
+     * @return View.OnClickListener
+     */
     private View.OnClickListener getDetailActionListener() {
         return new View.OnClickListener() {
             @Override
@@ -177,6 +217,7 @@ public class SubscriptionActivity extends Activity implements SubscriptionContra
                 Object data = v.getTag();
                 if (data instanceof String) {
                     String productId = (String) data;
+                    // Open the subscription page of HUAWEI IAP.
                     presenter.showSubscription(productId);
                 }
             }

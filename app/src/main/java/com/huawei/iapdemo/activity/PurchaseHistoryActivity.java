@@ -45,10 +45,13 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
 
     private String TAG = "PurchaseHistoryActivity";
 
+    // ListView for displaying the purchased products.
     private ListView billListView;
 
+    // The list includes the purchase data String.
     List<String> billList = new ArrayList<String>();
 
+    // A data location flag for a query in pagination mode.
     private static String continuationToken = null;
 
     @Override
@@ -64,10 +67,13 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        queryHistoryInterface();
+        queryPurchasedConsumables();
     }
 
-    private void queryHistoryInterface() {
+    /**
+     * Obtains the purchase data of all purchased and consumed consumables.
+     */
+    private void queryPurchasedConsumables() {
         IapClient iapClient = Iap.getIapClient(this);
         IapRequestHelper.obtainOwnedPurchaseRecord(iapClient, IapClient.PriceType.IN_APP_CONSUMABLE, continuationToken, new IapApiCallback<OwnedPurchasesResult>() {
             @Override
@@ -76,21 +82,23 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
                 List<String> inAppPurchaseDataList = result.getInAppPurchaseDataList();
                 List<String> signatureList = result.getInAppSignature();
                 if (inAppPurchaseDataList == null) {
-                    onFinish();
+                    showBillList();
                     return;
                 }
                 Log.i(TAG, "list size: " + inAppPurchaseDataList.size());
                 for (int i = 0; i < signatureList.size(); i++) {
+                    // Check whether the signature of the purchase data is valid.
                     boolean success = CipherUtil.doCheck(inAppPurchaseDataList.get(i), signatureList.get(i), CipherUtil.getPublicKey());
                     if (success) {
                         billList.add(inAppPurchaseDataList.get(i));
                     }
                 }
                 continuationToken = result.getContinuationToken();
+                // If the continuationToken is not empty, you need to continue the query to get all purchase data.
                 if (!TextUtils.isEmpty(continuationToken)) {
-                    queryHistoryInterface();
+                    queryPurchasedConsumables();
                 } else {
-                    onFinish();
+                    showBillList();
                 }
 
             }
@@ -99,12 +107,15 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
             public void onFail(Exception e) {
                 Log.e(TAG, "obtainOwnedPurchaseRecord, " + e.getMessage());
                 ExceptionHandle.handle(PurchaseHistoryActivity.this, e);
-                onFinish();
+                showBillList();
             }
         });
     }
 
-    private void onFinish() {
+    /**
+     * Displays the purchased product list.
+     */
+    private void showBillList() {
         findViewById(R.id.progressBar).setVisibility(View.GONE);
         findViewById(R.id.bill_listview).setVisibility(View.VISIBLE);
         Log.i(TAG, "onFinish");

@@ -51,6 +51,7 @@ import com.iapdemo.huawei.R;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,12 +63,22 @@ public class ConsumptionActivity extends Activity {
     private String TAG = "ConsumptionActivity";
     private TextView countTextView;
 
-    // consumable product.
+    // ListView for displaying consumables.
     private ListView consumableProductsListview;
+
+    // The list of products to be purchased.
     private List<ProductInfo> consumableProducts = new ArrayList<ProductInfo>();
+
+    // The product ID array of products to be purchased.
+    private static final String[] CONSUMABLES = new String[]{"CProduct01", "CProduct02"};
+
+    // The Adapter for consumableProductsListview.
     private ProductListAdapter adapter;
+
+    // Click this button to start the PurchaseHistoryActivity which displays information about purchased products.
     private Button purchaseHisBtn;
 
+    // Use this IapClient instance to call the APIs of IAP.
     private IapClient mClient;
 
     @Override
@@ -80,6 +91,9 @@ public class ConsumptionActivity extends Activity {
         queryPurchases(null);
     }
 
+    /**
+     * Initialize the UI.
+     */
     private void initView() {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.content).setVisibility(View.GONE);
@@ -104,9 +118,11 @@ public class ConsumptionActivity extends Activity {
         queryProducts();
     }
 
+    /**
+     * Obtains product details of products and show the products.
+     */
     private void queryProducts() {
-        List<String> productIds = new ArrayList<String>();
-        productIds.add("CProduct01");
+        List<String> productIds = Arrays.asList(CONSUMABLES);
         IapRequestHelper.obtainProductInfo(mClient, productIds, IapClient.PriceType.IN_APP_CONSUMABLE, new IapApiCallback<ProductInfoResult>() {
             @Override
             public void onSuccess(ProductInfoResult result) {
@@ -129,6 +145,9 @@ public class ConsumptionActivity extends Activity {
         });
     }
 
+    /**
+     * Show products on the page.
+     */
     private void showProducts() {
         findViewById(R.id.progressBar).setVisibility(View.GONE);
         findViewById(R.id.content).setVisibility(View.VISIBLE);
@@ -138,7 +157,7 @@ public class ConsumptionActivity extends Activity {
     }
 
     /**
-     * Call the obtainOwnedPurchases API to obtain the data about consumable products that a user has purchased but has not been delivered.
+     * Call the obtainOwnedPurchases API to obtain the data about consumable products that the user has purchased but has not been delivered.
      */
     private void queryPurchases(String continuationToken) {
         final String tag = "obtainOwnedPurchases";
@@ -173,7 +192,14 @@ public class ConsumptionActivity extends Activity {
 
     }
 
+    /**
+     * Deliver the product.
+     *
+     * @param inAppPurchaseDataStr Includes the purchase details.
+     * @param inAppPurchaseDataSignature The signature String of inAppPurchaseDataStr.
+     */
     private void deliverProduct(final String inAppPurchaseDataStr, final String inAppPurchaseDataSignature) {
+        // Check whether the signature of the purchase data is valid.
         if (CipherUtil.doCheck(inAppPurchaseDataStr, inAppPurchaseDataSignature, CipherUtil.getPublicKey())) {
             try {
                 InAppPurchaseData inAppPurchaseDataBean = new InAppPurchaseData(inAppPurchaseDataStr);
@@ -207,12 +233,20 @@ public class ConsumptionActivity extends Activity {
         }
     }
 
+    /**
+     * Update the number of gems on the page.
+     */
     private void updateNumberOfGems() {
         // Update the number of gems.
         String countOfGems = String.valueOf(DeliveryUtils.getCountOfGems(ConsumptionActivity.this));
         countTextView.setText(countOfGems);
     }
 
+    /**
+     * Initiate a purchase.
+     *
+     * @param index Item to be purchased.
+     */
     private void buy(int index) {
         ProductInfo productInfo = consumableProducts.get(index);
         IapRequestHelper.createPurchaseIntent(mClient, productInfo.getProductId(), IapClient.PriceType.IN_APP_CONSUMABLE, new IapApiCallback<PurchaseIntentResult>() {
@@ -252,14 +286,14 @@ public class ConsumptionActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == Constants.REQ_CODE_BUY) {
             if (data == null) {
                 Log.e(TAG, "data is null");
                 return;
             }
-            PurchaseResultInfo purchaseIntentResult = Iap.getIapClient(this).parsePurchaseResultInfoFromIntent(data);
-            switch(purchaseIntentResult.getReturnCode()) {
+            // Parses payment result data.
+            PurchaseResultInfo purchaseResultInfo = Iap.getIapClient(this).parsePurchaseResultInfoFromIntent(data);
+            switch(purchaseResultInfo.getReturnCode()) {
                 case OrderStatusCode.ORDER_STATE_CANCEL:
                     Toast.makeText(this, "Order has been canceled!", Toast.LENGTH_SHORT).show();
                     break;
@@ -268,7 +302,7 @@ public class ConsumptionActivity extends Activity {
                     queryPurchases(null);
                     break;
                 case OrderStatusCode.ORDER_STATE_SUCCESS:
-                    deliverProduct(purchaseIntentResult.getInAppPurchaseData(), purchaseIntentResult.getInAppDataSignature());
+                    deliverProduct(purchaseResultInfo.getInAppPurchaseData(), purchaseResultInfo.getInAppDataSignature());
                     break;
                 default:
                     break;

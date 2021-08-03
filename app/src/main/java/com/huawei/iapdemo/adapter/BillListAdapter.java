@@ -41,7 +41,10 @@ public class BillListAdapter extends BaseAdapter {
 
     private static final String TAG = "BillListAdapter";
 
+    // Context instance.
     private Context mContext;
+
+    // The list includes the purchaseData String.
     private List<String> mBillList;
 
     public BillListAdapter(Context context, List<String> billList) {

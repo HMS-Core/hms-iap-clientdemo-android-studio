@@ -45,7 +45,8 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
     private OwnedPurchasesResult cacheOwnedPurchasesResult;
 
     /**
-     * Init SubscriptionPresenter
+     * Init SubscriptionPresenter.
+     *
      * @param view the view which the data place in
      */
     SubscriptionPresenter(SubscriptionContract.View view) {
@@ -62,10 +63,15 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
 
     @Override
     public void load(List<String> productIds) {
+        // Obtains product details of products and show the purchase entry.
         queryProducts(productIds);
+        // Update the purchase state of the subscriptions.
         refreshSubscription();
     }
 
+    /**
+     * Update the purchase state of the subscriptions.
+     */
     @Override
     public void refreshSubscription() {
         querySubscriptions(new SubscriptionContract.ResultCallback<Boolean>() {
@@ -76,6 +82,11 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
         }, null);
     }
 
+    /**
+     * Obtains product details of products and show the purchase entry for the products.
+     *
+     * @param productIds The ID list of products to be queried.
+     */
     private void queryProducts(List<String> productIds) {
         IapRequestHelper.obtainProductInfo(Iap.getIapClient(view.getActivity()), productIds, IapClient.PriceType.IN_APP_SUBSCRIPTION, new IapApiCallback<ProductInfoResult>() {
             @Override
@@ -100,6 +111,12 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
         });
     }
 
+    /**
+     * Obtain all the available subscriptions.
+     *
+     * @param callback Used to return message when a request is finished.
+     * @param continuationToken A data location flag for a query in pagination mode.
+     */
     private void querySubscriptions(final SubscriptionContract.ResultCallback<Boolean> callback, String continuationToken) {
         IapRequestHelper.obtainOwnedPurchases(Iap.getIapClient(view.getActivity()), IapClient.PriceType.IN_APP_SUBSCRIPTION, continuationToken, new IapApiCallback<OwnedPurchasesResult>() {
             @Override
@@ -119,7 +136,7 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
 
     @Override
     public void buy(final String productId) {
-        // clear local cache
+        // Clear local cache.
         cacheOwnedPurchasesResult = null;
         IapClient iapClient = Iap.getIapClient(view.getActivity());
         IapRequestHelper.createPurchaseIntent(iapClient, productId, IapClient.PriceType.IN_APP_SUBSCRIPTION, new IapApiCallback<PurchaseIntentResult>() {
@@ -130,7 +147,7 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
                     return;
                 }
 
-                // you should pull up the page to complete the payment process
+                // You should pull up the page to complete the payment process.
                 IapRequestHelper.startResolutionForResult(view.getActivity(), result.getStatus(), Constants.REQ_CODE_BUY);
             }
 
@@ -151,11 +168,22 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
         });
     }
 
+    /**
+     * Open the subscription page of HUAWEI IAP to show the subscription details of the product.
+     *
+     * @param productId The ID of a purchased subscription.
+     */
     @Override
     public void showSubscription(String productId) {
         IapRequestHelper.showSubscription(view.getActivity(), productId);
     }
 
+    /**
+     * Check whether to offer subscription service.
+     *
+     * @param productId Subscription product id.
+     * @param callback Result callback.
+     */
     @Override
     public void shouldOfferService(final String productId, final SubscriptionContract.ResultCallback<Boolean> callback) {
         if (null == callback || TextUtils.isEmpty(productId)) {

@@ -31,16 +31,16 @@ import static android.content.ContentValues.TAG;
  * @since 2019/12/9
  */
 public class ExceptionHandle {
-
     /**
      * The exception is solved.
      */
     public static final int SOLVED = 0;
 
     /**
-     * Handles the exception returned from the iap api.
-     * @param activity The Activity to call the iap api.
-     * @param e The exception returned from the iap api.
+     * Handles the exception returned from the IAP API.
+     *
+     * @param activity The Activity to call the IAP API.
+     * @param e The exception returned from the IAP API.
      * @return int
      */
     public static int handle(Activity activity, Exception e) {

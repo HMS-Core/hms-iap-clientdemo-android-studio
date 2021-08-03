@@ -37,7 +37,8 @@ public class SubscriptionUtils {
     private static final String TAG = "SubscriptionUtils";
 
     /**
-     * Decide whether to offer subscription service
+     * Decide whether to offer subscription service.
+     *
      * @param result the OwnedPurchasesResult from IapClient.obtainOwnedPurchases
      * @param productId subscription product id
      * @return decision result
@@ -73,12 +74,14 @@ public class SubscriptionUtils {
     }
 
     /**
-     * Parse PurchaseResult data from intent
+     * Parse PurchaseResult data from intent.
+     *
      * @param activity Activity
      * @param data the intent from onActivityResult
      * @return result status
      */
     public static int getPurchaseResult(Activity activity, Intent data) {
+        // Parse PurchaseResult data from intent.
         PurchaseResultInfo purchaseResultInfo = Iap.getIapClient(activity).parsePurchaseResultInfoFromIntent(data);
         if (null == purchaseResultInfo) {
             Log.e(TAG, "PurchaseResultInfo is null");
@@ -93,6 +96,7 @@ public class SubscriptionUtils {
                 return OrderStatusCode.ORDER_PRODUCT_OWNED;
 
             case OrderStatusCode.ORDER_STATE_SUCCESS:
+                // Check whether the signature of the purchase data is valid.
                 boolean credible = CipherUtil.doCheck(purchaseResultInfo.getInAppPurchaseData(), purchaseResultInfo.getInAppDataSignature(), CipherUtil
                     .getPublicKey());
                 if (credible) {

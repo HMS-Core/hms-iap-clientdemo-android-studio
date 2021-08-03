@@ -37,15 +37,18 @@ import java.security.spec.X509EncodedKeySpec;
 public class CipherUtil {
     private static final String TAG = "CipherUtil";
 
+    // The SHA256WithRSA algorithm.
     private static final String SIGN_ALGORITHMS = "SHA256WithRSA";
 
+    // The Iap public key of this App.
     private static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhq5dfS3JJkugYdnasvQyDqwx9RKwySDmCLItVsSPcSAaxtioas2Fobdba8CleeE4vBRRqxHEUVnpa+JBo9xnzgEx0yX4Mo++wi7LERCO4WJLsuDgogPjPVFBw8W0VZgENNkjI7MiuCQwAXhCEurE4wxUudbKLdy15dphNba0BMQy6U3VJSmfLQOqoAFI5mz2TwzFuoCDVY3LlAzWZMtl/baNfHsZa4XKT7C3wSnrvXL+AoBUWfRtt3+JBtLDchhbcJT8KHa/7lXaXTx0yZIUq9J3gLKbPP+Z8EPxT0N/XLiXsWiDr+iKqZjpatys0TIgoWn547+1V2yneWxPRxc+0QIDAQAB";
 
     /**
-     * the method to check the signature for the data returned from the interface
-     * @param content Unsigned data
-     * @param sign the signature for content
-     * @param publicKey the public of the application
+     * The method to check the signature for the data returned from the interface.
+     *
+     * @param content Unsigned data.
+     * @param sign The signature for content.
+     * @param publicKey The public of the application.
      * @return boolean
      */
     public static boolean doCheck(String content, String sign, String publicKey) {
@@ -87,8 +90,9 @@ public class CipherUtil {
     }
 
     /**
-     * get the publicKey of the application
+     * Get the publicKey of the application.
      * During the encoding process, avoid storing the public key in clear text.
+     *
      * @return publickey
      */
     public static String getPublicKey(){

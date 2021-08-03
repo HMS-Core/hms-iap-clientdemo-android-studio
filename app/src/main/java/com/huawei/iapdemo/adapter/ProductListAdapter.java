@@ -37,7 +37,10 @@ import java.util.List;
  */
 public class ProductListAdapter extends BaseAdapter {
 
+    // Context instance.
     private Context mContext;
+
+    // The list of products.
     private List<ProductInfo> productInfos;
 
     public ProductListAdapter(Context context, List<ProductInfo> productInfos) {
