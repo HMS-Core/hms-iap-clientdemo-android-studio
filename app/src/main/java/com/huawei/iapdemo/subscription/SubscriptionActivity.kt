@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.subscription
 
 import android.app.Activity
@@ -37,7 +38,9 @@ import java.util.*
  * @since 2019/12/9
  */
 class SubscriptionActivity : Activity(), SubscriptionContract.View {
+    // Presenter of this page, which is used to process data interactions.
     private var presenter: Presenter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subscription)
@@ -70,6 +73,11 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
         }
     }
 
+    /**
+     * Show subscription products.
+     *
+     * @param productInfos Product list.
+     */
     override fun showProducts(productInfos: List<ProductInfo>?) {
         if (null == productInfos) {
             Toast.makeText(this, R.string.external_error, Toast.LENGTH_SHORT).show()
@@ -82,15 +90,23 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
         findViewById<View>(R.id.content).visibility = View.VISIBLE
     }
 
+    /**
+     * Update product purchase status.
+     *
+     * @param ownedPurchasesResult Purchases result.
+     */
     override fun updateProductStatus(ownedPurchasesResult: OwnedPurchasesResult?) {
         for (productId in SUBSCRIPTION_PRODUCT) {
             val view = getView(productId)
             val button = view!!.findViewById<Button>(R.id.action)
             button.tag = productId
+            // Check whether to offer subscription service.
             if (SubscriptionUtils.shouldOfferService(ownedPurchasesResult, productId)) {
+                // Offer subscription service.
                 button.setText(R.string.active)
                 button.setOnClickListener(detailActionListener)
             } else {
+                // Show the purchase Entry.
                 button.setText(R.string.buy)
                 button.setOnClickListener(buyActionListener)
             }
@@ -98,13 +114,19 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
     }
 
     /**
-     * Jump to manage subscription page
-     * @param view the view which has been clicked
+     * Jump to manage subscription page.
+     *
+     * @param view The view which has been clicked.
      */
     fun manageSubscription(view: View?) {
         presenter!!.showSubscription("")
     }
 
+    /**
+     * Show products on the page.
+     *
+     * @param productInfo Contains details of a product.
+     */
     private fun showProduct(productInfo: ProductInfo) {
         val view = getView(productInfo.productId)
         if (view != null) {
@@ -117,6 +139,13 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
         }
     }
 
+    /**
+     * Obtains the layout of the product.
+     *
+     * @param productId ProductId of the product.
+     *
+     * @return View
+     */
     private fun getView(productId: String): View? {
         var view: View? = null
         if (SUBSCRIPTION_PRODUCT[0] == productId) {
@@ -137,6 +166,11 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
     override val activity: Activity
         get() = this
 
+    /**
+     * Obtains the listener of the BUY button.
+     *
+     * @return View.OnClickListener
+     */
     private val buyActionListener: View.OnClickListener
         private get() = View.OnClickListener { v ->
             val data = v.tag
@@ -145,6 +179,11 @@ class SubscriptionActivity : Activity(), SubscriptionContract.View {
             }
         }
 
+    /**
+     * Obtains the listener of the ACTIVE button.
+     *
+     * @return View.OnClickListener
+     */
     private val detailActionListener: View.OnClickListener
         private get() = View.OnClickListener { v ->
             val data = v.tag

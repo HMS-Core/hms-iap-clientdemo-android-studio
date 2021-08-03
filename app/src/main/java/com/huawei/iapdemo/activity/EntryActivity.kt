@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.activity
 
 import android.content.Intent
@@ -100,6 +101,7 @@ class EntryActivity : AppCompatActivity(), View.OnClickListener {
         Log.i(TAG, "onActivityResult")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQ_CODE_LOGIN) {
+            // Parse the returnCode from intent.
             val returnCode = IapClientHelper.parseRespCodeFromIntent(data)
             Log.i(TAG, "onActivityResult, returnCode: $returnCode")
             if (returnCode == OrderStatusCode.ORDER_STATE_SUCCESS) {

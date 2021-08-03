@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.common
 
 /**
@@ -23,12 +24,14 @@ package com.huawei.iapdemo.common
 interface IapApiCallback<T> {
     /**
      * The request is successful.
+     *
      * @param result The result of a successful response.
      */
     fun onSuccess(result: T)
 
     /**
      * Callback fail.
+     *
      * @param e An Exception from IAPSDK.
      */
     fun onFail(e: Exception?)

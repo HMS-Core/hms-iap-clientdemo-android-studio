@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.common
 
 import android.app.Activity
@@ -34,9 +35,10 @@ object ExceptionHandle {
     const val SOLVED = 0
 
     /**
-     * Handles the exception returned from the iap api.
-     * @param activity The Activity to call the iap api.
-     * @param e The exception returned from the iap api.
+     * Handles the exception returned from the IAP API.
+     *
+     * @param activity The Activity to call the IAP API.
+     * @param e The exception returned from the IAP API.
      * @return int
      */
     @JvmStatic

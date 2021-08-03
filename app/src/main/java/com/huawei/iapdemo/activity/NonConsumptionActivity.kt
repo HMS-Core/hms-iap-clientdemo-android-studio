@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.activity
 
 import android.content.Intent
@@ -28,7 +29,6 @@ import android.widget.Toast
 import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.*
-import com.huawei.iapdemo.activity.NonConsumptionActivity
 import com.huawei.iapdemo.adapter.ProductListAdapter
 import com.huawei.iapdemo.common.*
 import com.iapdemo.huawei.R
@@ -42,12 +42,25 @@ import java.util.*
  */
 class NonConsumptionActivity : AppCompatActivity() {
     private val TAG = "NonConsumptionActivity"
+
+    // Use this IapClient instance to call the APIs of IAP.
     private var mClient: IapClient? = null
+
+    // ListView for displaying non-consumables.
     private var nonconsumableProductListview: ListView? = null
+
+    // The list of products to be purchased.
     private val nonconsumableProducts: MutableList<ProductInfo?> = ArrayList()
+
+    // The Adapter for nonconsumableProductListview.
     private var productListAdapter: ProductListAdapter<*>? = null
+
+    // Show this layout when the Hidden Level have been purchased.
     private var hasOwnedHiddenLevelLayout: LinearLayout? = null
+
+    // Whether the Hidden Level has been purchased.
     private var isHiddenLevelPurchased = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_non_consumption)
@@ -57,6 +70,9 @@ class NonConsumptionActivity : AppCompatActivity() {
         queryPurchases(null)
     }
 
+    /**
+     * Initialize the UI.
+     */
     private fun initView() {
         findViewById<View>(R.id.progressBar).visibility = View.VISIBLE
         findViewById<View>(R.id.content).visibility = View.INVISIBLE
@@ -64,6 +80,11 @@ class NonConsumptionActivity : AppCompatActivity() {
         hasOwnedHiddenLevelLayout = findViewById<View>(R.id.layout_hasOwnedHiddenLevel) as LinearLayout
     }
 
+    /**
+     * Call the obtainOwnedPurchases API to obtain the data about non-consumable products that the user has purchased.
+     *
+     * @param continuationToken A data location flag for a query in pagination mode.
+     */
     private fun queryPurchases(continuationToken: String?) {
         // Query users' purchased non-consumable products.
         IapRequestHelper.obtainOwnedPurchases(mClient, IapClient.PriceType.IN_APP_NONCONSUMABLE, continuationToken, object : IapApiCallback<OwnedPurchasesResult?> {
@@ -82,6 +103,11 @@ class NonConsumptionActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Checking the Purchase Status of Hidden Level.
+     *
+     * @param result OwnedPurchasesResults instance obtained from IAP, which contains information about purchased products.
+     */
     private fun checkHiddenLevelPurchaseState(result: OwnedPurchasesResult?) {
         if (result == null || result.inAppPurchaseDataList == null) {
             Log.i(TAG, "result is null")
@@ -91,6 +117,7 @@ class NonConsumptionActivity : AppCompatActivity() {
         val inAppPurchaseDataList = result.inAppPurchaseDataList
         val inAppSignature = result.inAppSignature
         for (i in inAppPurchaseDataList.indices) {
+            // Check whether the signature of the purchase data is valid.
             if (CipherUtil.doCheck(inAppPurchaseDataList[i], inAppSignature[i], CipherUtil.publicKey)) {
                 try {
                     val inAppPurchaseDataBean = InAppPurchaseData(inAppPurchaseDataList[i])
@@ -107,12 +134,18 @@ class NonConsumptionActivity : AppCompatActivity() {
             }
         }
         if (isHiddenLevelPurchased) {
+            // Deliver the product after the Hidden Level was purchased.
             deliverProduct()
         } else {
+            // The user has not purchased the hidden level.
+            // Obtain the product details and show the purchase entry to the user.
             queryProducts()
         }
     }
 
+    /**
+     * Deliver the product.
+     */
     private fun deliverProduct() {
         // User has purchased hidden level.
         findViewById<View>(R.id.progressBar).visibility = View.GONE
@@ -121,6 +154,9 @@ class NonConsumptionActivity : AppCompatActivity() {
         hasOwnedHiddenLevelLayout!!.visibility = View.VISIBLE
     }
 
+    /**
+     * Obtains product details of products and show the products.
+     */
     private fun queryProducts() {
         val productIds: MutableList<String> = ArrayList()
         productIds.add(HIDDEN_LEVEL_PRODUCTID)
@@ -131,7 +167,7 @@ class NonConsumptionActivity : AppCompatActivity() {
                     Toast.makeText(this@NonConsumptionActivity, "error", Toast.LENGTH_SHORT).show()
                     return
                 }
-                // to show product information
+                // To show product information.
                 showProducts(result.productInfoList)
             }
 
@@ -142,6 +178,9 @@ class NonConsumptionActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Show products on the page.
+     */
     private fun showProducts(products: List<ProductInfo>) {
         findViewById<View>(R.id.progressBar).visibility = View.GONE
         findViewById<View>(R.id.content).visibility = View.VISIBLE
@@ -153,10 +192,15 @@ class NonConsumptionActivity : AppCompatActivity() {
         productListAdapter = ProductListAdapter(this, nonconsumableProducts)
         nonconsumableProductListview!!.adapter = productListAdapter
         productListAdapter!!.notifyDataSetChanged()
-        nonconsumableProductListview!!.onItemClickListener = OnItemClickListener { parent, view, position, id -> gotoBuy(position) }
+        nonconsumableProductListview!!.onItemClickListener = OnItemClickListener { parent, view, position, id -> buy(position) }
     }
 
-    private fun gotoBuy(index: Int) {
+    /**
+     * Initiate a purchase.
+     *
+     * @param index Item to be purchased.
+     */
+    private fun buy(index: Int) {
         val productInfo = nonconsumableProducts[index]
         IapRequestHelper.createPurchaseIntent(mClient, productInfo!!.productId, IapClient.PriceType.IN_APP_NONCONSUMABLE, object : IapApiCallback<PurchaseIntentResult?> {
             override fun onSuccess(result: PurchaseIntentResult?) {
@@ -164,7 +208,7 @@ class NonConsumptionActivity : AppCompatActivity() {
                     Log.e(TAG, "result is null")
                     return
                 }
-                // you should pull up the page to complete the payment process
+                // You should pull up the page to complete the payment process.
                 IapRequestHelper.startResolutionForResult(this@NonConsumptionActivity, result.status, Constants.REQ_CODE_BUY)
             }
 
@@ -172,6 +216,7 @@ class NonConsumptionActivity : AppCompatActivity() {
                 val errorCode = ExceptionHandle.handle(this@NonConsumptionActivity, e!!)
                 if (errorCode != ExceptionHandle.SOLVED) {
                     Log.i(TAG, "createPurchaseIntent, returnCode: $errorCode")
+                    // Handle error scenarios.
                     when (errorCode) {
                         OrderStatusCode.ORDER_PRODUCT_OWNED -> queryPurchases(null)
                         else -> {
@@ -195,10 +240,13 @@ class NonConsumptionActivity : AppCompatActivity() {
                 Log.e(TAG, "data is null")
                 return
             }
+            // Parses payment result data.
             val buyResultInfo = Iap.getIapClient(this).parsePurchaseResultInfoFromIntent(data)
             when (buyResultInfo.returnCode) {
                 OrderStatusCode.ORDER_STATE_CANCEL -> Toast.makeText(this, "Order has been canceled!", Toast.LENGTH_SHORT).show()
+                // Obtains the order information of all purchased products to check whether the product has been purchased.
                 OrderStatusCode.ORDER_PRODUCT_OWNED -> queryPurchases(null)
+                // Check whether the signature of the purchase data is valid.
                 OrderStatusCode.ORDER_STATE_SUCCESS -> if (CipherUtil.doCheck(buyResultInfo.inAppPurchaseData, buyResultInfo.inAppDataSignature, CipherUtil.publicKey)) {
                     isHiddenLevelPurchased = true
                     deliverProduct()

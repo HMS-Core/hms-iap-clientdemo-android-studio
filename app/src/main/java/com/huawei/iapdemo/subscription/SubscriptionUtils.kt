@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.subscription
 
 import android.app.Activity
@@ -35,7 +36,8 @@ object SubscriptionUtils {
     private const val TAG = "SubscriptionUtils"
 
     /**
-     * Decide whether to offer subscription service
+     * Decide whether to offer subscription service.
+     *
      * @param result the OwnedPurchasesResult from IapClient.obtainOwnedPurchases
      * @param productId subscription product id
      * @return decision result
@@ -69,12 +71,14 @@ object SubscriptionUtils {
     }
 
     /**
-     * Parse PurchaseResult data from intent
+     * Parse PurchaseResult data from intent.
+     *
      * @param activity Activity
      * @param data the intent from onActivityResult
      * @return result status
      */
     fun getPurchaseResult(activity: Activity?, data: Intent?): Int {
+        // Parse PurchaseResult data from intent.
         val purchaseResultInfo = Iap.getIapClient(activity).parsePurchaseResultInfoFromIntent(data)
         if (null == purchaseResultInfo) {
             Log.e(TAG, "PurchaseResultInfo is null")
@@ -88,6 +92,7 @@ object SubscriptionUtils {
                 OrderStatusCode.ORDER_PRODUCT_OWNED
             }
             OrderStatusCode.ORDER_STATE_SUCCESS -> {
+                // Check whether the signature of the purchase data is valid.
                 val credible = doCheck(purchaseResultInfo.inAppPurchaseData, purchaseResultInfo.inAppDataSignature, CipherUtil.publicKey)
                 if (credible) {
                     try {

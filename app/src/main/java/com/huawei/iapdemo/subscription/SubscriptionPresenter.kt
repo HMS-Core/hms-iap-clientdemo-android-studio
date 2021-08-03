@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.subscription
 
 import android.text.TextUtils
@@ -50,10 +51,15 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
     }
 
     override fun load(productIds: List<String>) {
+        // Obtains product details of products and show the purchase entry.
         queryProducts(productIds)
+        // Update the purchase state of the subscriptions.
         refreshSubscription()
     }
 
+    /**
+     * Update the purchase state of the subscriptions.
+     */
     override fun refreshSubscription() {
         querySubscriptions(object: SubscriptionContract.ResultCallback<Boolean> {
             override fun onResult(result: Boolean) {
@@ -62,6 +68,11 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
         }, null)
     }
 
+    /**
+     * Obtains product details of products and show the purchase entry for the products.
+     *
+     * @param productIds The ID list of products to be queried.
+     */
     private fun queryProducts(productIds: List<String>) {
         obtainProductInfo(Iap.getIapClient(view!!.activity), productIds, IapClient.PriceType.IN_APP_SUBSCRIPTION, object : IapApiCallback<ProductInfoResult?> {
             override fun onSuccess(result: ProductInfoResult?) {
@@ -83,6 +94,12 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
         })
     }
 
+    /**
+     * Obtain all the available subscriptions.
+     *
+     * @param callback Used to return message when a request is finished.
+     * @param continuationToken A data location flag for a query in pagination mode.
+     */
     private fun querySubscriptions(callback: SubscriptionContract.ResultCallback<Boolean>, continuationToken: String?) {
         obtainOwnedPurchases(Iap.getIapClient(view!!.activity), IapClient.PriceType.IN_APP_SUBSCRIPTION, continuationToken, object : IapApiCallback<OwnedPurchasesResult?> {
             override fun onSuccess(result: OwnedPurchasesResult?) {
@@ -99,7 +116,7 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
     }
 
     override fun buy(productId: String?) {
-        // clear local cache
+        // Clear local cache.
         cacheOwnedPurchasesResult = null
         val iapClient = Iap.getIapClient(view!!.activity)
         createPurchaseIntent(iapClient, productId!!, IapClient.PriceType.IN_APP_SUBSCRIPTION, object : IapApiCallback<PurchaseIntentResult?> {
@@ -109,7 +126,7 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
                     return
                 }
 
-                // you should pull up the page to complete the payment process
+                // You should pull up the page to complete the payment process.
                 startResolutionForResult(view!!.activity, result.status, Constants.REQ_CODE_BUY)
             }
 
@@ -128,10 +145,21 @@ class SubscriptionPresenter internal constructor(view: SubscriptionContract.View
         })
     }
 
+    /**
+     * Open the subscription page of HUAWEI IAP to show the subscription details of the product.
+     *
+     * @param productId The ID of a purchased subscription.
+     */
     override fun showSubscription(productId: String?) {
         showSubscription(view!!.activity, productId)
     }
 
+    /**
+     * Check whether to offer subscription service.
+     *
+     * @param productId Subscription product id.
+     * @param callback Result callback.
+     */
     override fun shouldOfferService(productId: String, callback: SubscriptionContract.ResultCallback<Boolean?>?) {
         if (null == callback || TextUtils.isEmpty(productId)) {
             Log.e(TAG, "ResultCallback is null or productId is empty")

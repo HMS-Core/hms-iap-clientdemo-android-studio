@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.huawei.iapdemo.subscription
 
 import android.app.Activity
@@ -25,10 +26,14 @@ import com.huawei.hms.iap.entity.ProductInfo
  * @since 2019/12/9
  */
 interface SubscriptionContract {
+    /**
+     * Contains methods for refreshing the UI.
+     */
     interface View {
         /**
-         * Show subscription products
-         * @param productInfoList Product list
+         * Show subscription products.
+         *
+         * @param productInfoList Product list.
          */
         fun showProducts(productInfoList: List<ProductInfo>?)
 
@@ -45,47 +50,59 @@ interface SubscriptionContract {
         val activity: Activity
     }
 
+    /**
+     * Contains methods for data interaction.
+     */
     interface Presenter {
         /**
-         * Set the view for presenting data
+         * Set the view for presenting data.
+         *
          * @param view The view for presenting data
          */
         fun setView(view: View?)
 
         /**
-         * Load product data according product Ids
+         * Load product data according product Ids.
+         *
          * @param productIds Product Ids
          */
         fun load(productIds: List<String>)
 
         /**
-         * Refresh owned subscriptions
+         * Refresh owned subscriptions.
          */
         fun refreshSubscription()
 
         /**
-         * Buy a subscription product according to productId
-         * @param productId Subscription product id
+         * Buy a subscription product according to productId.
+         *
+         * @param productId The ID of the product to be purchased.
          */
         fun buy(productId: String?)
 
         /**
-         * Show subscription detail
-         * @param productId Owned subscription product id
+         * Show subscription detail.
+         *
+         * @param productId The ID of a purchased subscription.
          */
         fun showSubscription(productId: String?)
 
         /**
-         * Decide whether to offer subscription service
-         * @param productId Subscription product id
-         * @param callback Result callback
+         * Decide whether to offer subscription service.
+         *
+         * @param productId Subscription product id.
+         * @param callback Result callback.
          */
         fun shouldOfferService(productId: String, callback: ResultCallback<Boolean?>?)
     }
 
+    /**
+     * Callback for when a request is finished.
+     */
     interface ResultCallback<T> {
         /**
          * Result callback
+         *
          * @param result Result
          */
         fun onResult(result: T)
