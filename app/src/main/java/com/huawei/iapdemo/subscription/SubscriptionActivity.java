@@ -19,6 +19,7 @@ package com.huawei.iapdemo.subscription;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ import java.util.List;
  *
  * @since 2019/12/9
  */
-public class SubscriptionActivity extends Activity implements SubscriptionContract.View {
+public class SubscriptionActivity extends AppCompatActivity implements SubscriptionContract.View {
 
     private static final String TAG = "SubscriptionActivity";
 

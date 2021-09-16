@@ -19,6 +19,7 @@ package com.huawei.iapdemo.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -59,8 +60,10 @@ import java.util.List;
  *
  * @since 2019/12/9
  */
-public class ConsumptionActivity extends Activity {
+public class ConsumptionActivity extends AppCompatActivity {
     private String TAG = "ConsumptionActivity";
+
+    // Displays the number of gems.
     private TextView countTextView;
 
     // ListView for displaying consumables.
@@ -298,6 +301,8 @@ public class ConsumptionActivity extends Activity {
                     Toast.makeText(this, "Order has been canceled!", Toast.LENGTH_SHORT).show();
                     break;
                 case OrderStatusCode.ORDER_STATE_FAILED:
+                case OrderStatusCode.ORDER_STATE_DEFAULT_CODE:
+                    // Default value returned by parsePurchaseResultInfoFromIntent when no return code is received from the IAP.
                 case OrderStatusCode.ORDER_PRODUCT_OWNED:
                     queryPurchases(null);
                     break;

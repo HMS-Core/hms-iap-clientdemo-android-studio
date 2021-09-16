@@ -4,7 +4,7 @@ English | [中文](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio
 The iap_demo App demonstrates HUAWEI In-App Purchases (IAP) client APIs and usages.
 
 Documentation can be found at this
-[link](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5).
+[link](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/introduction-0000001050033062).
 
 ## Table of Content
 - [Introduction](#introduction)
@@ -14,6 +14,7 @@ Documentation can be found at this
   - [Purchasing consumable product](#purchasing-consumable-product)
   - [Purchasing non-consumable product](#purchasing-non-consumable-product)
   - [Purchasing auto-renewable subscription service](#purchasing-auto-renewable-subscription-service)
+- [Question or issues](#question-or-issues)
 - [Licensing](#licensing)
 
 
@@ -40,9 +41,9 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
    1. Check whether the Android studio development environment is ready. Open the sample code project directory with file "build.gradle" in Android Studio. 
 
    2. Finish the configuration in AppGallery Connect. 
-   See details: [Configuring AppGallery Connect](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/config-agc-0000001050033072-V5)
+   See details: [Configuring AppGallery Connect](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/config-agc-0000001050033072)
 
-   3. Add your products on the AppGallery Connect. See details: [Configuring In-App Product Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/config-product-0000001050033076-V5)
+   3. Add your products on the AppGallery Connect. See details: [Configuring In-App Product Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/config-product-0000001050033076)
 
    4. To build this demo, please first import the demo in the Android Studio (3.x+).
 
@@ -50,7 +51,7 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
       - Download the file "agconnect-services.json" of the app on AGC, and add the file to the app root directory(\app) of the demo. 
       - Add the certificate file to the project and add your configuration to  in the app-level `build.gradle` file. 
       - Open the `AndroidManifest` file and change the value of package to your app package name.  
-      - Replace the PUBLIC_KEY in the CipherUtil class with the public key of your app. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/HMSCore-Guides-V5/query-payment-info-0000001050166299-V5).
+      - Replace the PUBLIC_KEY in the CipherUtil class with the public key of your app. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/query-payment-info-0000001050166299).
       - Replace products in the demo with your products.
 
    6. Run the sample on your Android device or emulator.
@@ -113,7 +114,7 @@ The demo provides *Service-One* and *Service-Two* as examples of subscription gr
 each contains 2 options of auto-renewable subscription.
 
 (For more detail of subscription and subscription group, see related
-[documentation](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-subscription-scenario).)
+[documentation](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/subscription-functions-0000001050130264).)
 
 1. Tap the **Auto-renewable subscription**, you should be able to see the home page for auto-renewable subscription demo.
     The demo will call the `obtainOwnedPurchase` API to obtain purchased subscription product.

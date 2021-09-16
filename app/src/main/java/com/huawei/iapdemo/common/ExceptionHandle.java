@@ -80,7 +80,7 @@ public class ExceptionHandle {
                     Toast.makeText(activity, "User does not agree the agreement", Toast.LENGTH_SHORT).show();
                     return SOLVED;
                 default:
-                    // handle other error scenarios
+                    // Handle other error scenarios.
                     Toast.makeText(activity, "Order unknown error!", Toast.LENGTH_SHORT).show();
                     return SOLVED;
             }
