@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huawei.iapdemo.activity.EntryActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_consumables_scene"
+        android:text="@string/consumable_products"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_non_consumables_scene"
+        android:text="@string/non_consumable_products"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_subscription_scene"
+        android:text="@string/auto_renewable_subscription"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
