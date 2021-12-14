@@ -1,9 +1,9 @@
 # 华为应用内支付服务客户端示例代码
-[English](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio) | 中文
+[English](README.md) | 中文
 
 本章节主要介绍接入华为应用内支付的客户端开发步骤，帮助您快速了解华为支付提供的客户端接口及其使用方法。
 
-点击[此处](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5)了解更多。
+点击[此处](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/introduction-0000001050033062-V5?ha_source=hms1)了解更多。
 
 
 ## 目录
@@ -31,13 +31,13 @@
 
 本demo仅演示商品购买过程，并未实际使用购买的商品。
 
-该示例也可以通过HMS Toolkit快速启动运行，且支持各Kit一站式集成，并提供远程真机免费调测等功能。了解更多信息，请参考HMS Toolkit官方链接：https://developer.huawei.com/consumer/cn/doc/development/Tools-Guides/getting-started-0000001077381096
+该示例也可以通过HMS Toolkit快速启动运行，且支持各Kit一站式集成，并提供远程真机免费调测等功能。了解更多信息，请参考HMS Toolkit[官方链接](https://developer.huawei.com/consumer/cn/doc/development/Tools-Guides/getting-started-0000001077381096?ha_source=hms1)
 
 ## 开发准备
 
 1. 检查Android Studio开发环境是否准备就绪。如果是，则使用Android Studio打开示例代码工程路径下的build.gradle文件。
-2. 在AppGallery Connect中创建应用并配置应用信息。详情请参见：[配置AppGallery Connect](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/config-agc-0000001050033072-V5)。
-3. 在AppGallery Connect中添加商品信息。详情请参见：[配置商品信息](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/config-product-0000001050033076-V5)。
+2. 在AppGallery Connect中创建应用并配置应用信息。详情请参见：[配置AppGallery Connect](hhttps://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/config-agc-0000001050033072?ha_source=hms1)。
+3. 在AppGallery Connect中添加商品信息。详情请参见：[配置商品信息](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/config-product-0000001050033076?ha_source=hms1)。
 4. 在Android Studio（3.0及以上版本）导入demo，再进行构建。
 5. 配置示例代码：
   
@@ -126,8 +126,8 @@ Demo以*Service-One*和*Service-Two*为订阅群组进行演示，每个订阅�
 如果您对HMS Core还处于评估阶段，可在[Reddit社区](https://www.reddit.com/r/HuaweiDevelopers/)获取关于HMS Core的最新讯息，并与其他开发者交流见解。
 
 如果您对使用HMS示例代码有疑问，请尝试：
-- 开发过程遇到问题上[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services)，在`huawei-mobile-services`标签下提问，有华为研发专家在线一对一解决您的问题。
-- 到[华为开发者论坛](https://developer.huawei.com/consumer/cn/forum/blockdisplay?fid=18) HMS Core板块与其他开发者进行交流。
+- 开发过程遇到问题上[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services?tab=Votes)，在`huawei-mobile-services`标签下提问，有华为研发专家在线一对一解决您的问题。
+- 到[华为开发者论坛](https://developer.huawei.com/consumer/cn/forum/blockdisplay?fid=18?ha_source=hms1) HMS Core板块与其他开发者进行交流。
 
 如果您在尝试示例代码中遇到问题，请向仓库提交[issue](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/issues)，也欢迎您提交[Pull Request](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/pulls)。
 
