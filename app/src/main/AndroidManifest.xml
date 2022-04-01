@@ -32,10 +32,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.huawei.iapdemo.activity.PurchaseHistoryActivity" />
-
-        <meta-data
-            android:name="com.huawei.hms.client.channel.androidMarket"
-            android:value="false" />
     </application>
 
 </manifest>
