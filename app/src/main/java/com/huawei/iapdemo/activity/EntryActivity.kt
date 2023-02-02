@@ -18,11 +18,13 @@ package com.huawei.iapdemo.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+
+import androidx.appcompat.app.AppCompatActivity
+
 import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.entity.IsEnvReadyResult
 import com.huawei.hms.iap.entity.OrderStatusCode
