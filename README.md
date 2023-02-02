@@ -59,7 +59,12 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
    6. Run the sample on your Android device or emulator.
 
 ## Supported Environments
-   Android SDK Version >= 22 and JDK version >= 1.8 is recommended.
+* JDK version: 1.8 or later
+* Android Studio version: 3.6.1 or later
+  - minSdkVersion: 19 or later
+  - targetSdkVersion: 30 (recommended)
+  - compileSdkVersion: 30 (recommended)
+  - Gradle version: 5.4.1 or later (recommended)
 
 ## Result
 Once you start the demo, you should be able to see the following page.
