@@ -49,8 +49,12 @@
 6. 在Android设备或模拟机上运行该示例代码。
 
 ## 环境要求
-
-推荐使用Android SDK 22版本及以上、JDK版本1.8及以上。
+* JDK 1.8及以上版本
+* 安装Android Studio 3.6.1及以上版本
+  - minSdkVersion 19及以上
+  - targetSdkVersion 30（推荐）
+  - compileSdkVersion 30（推荐）
+  - Gradle 5.4.1及以上（推荐）
 
 ## 运行结果
 
