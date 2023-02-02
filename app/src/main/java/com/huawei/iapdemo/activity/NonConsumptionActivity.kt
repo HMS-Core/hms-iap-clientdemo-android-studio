@@ -18,7 +18,6 @@ package com.huawei.iapdemo.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -26,13 +25,18 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
+
+import androidx.appcompat.app.AppCompatActivity
+
 import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.*
 import com.huawei.iapdemo.adapter.ProductListAdapter
 import com.huawei.iapdemo.common.*
 import com.iapdemo.huawei.R
+
 import org.json.JSONException
+
 import java.util.*
 
 /**
