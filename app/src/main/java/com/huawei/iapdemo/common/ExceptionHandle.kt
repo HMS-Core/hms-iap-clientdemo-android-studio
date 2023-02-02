@@ -95,7 +95,7 @@ object ExceptionHandle {
             }
         } else {
             Toast.makeText(activity, "external error", Toast.LENGTH_SHORT).show()
-            Log.e(ContentValues.TAG, e.message)
+            Log.e(ContentValues.TAG, e.message.toString())
             SOLVED
         }
     }
