@@ -177,7 +177,7 @@ object IapRequestHelper {
             try {
                 status.startResolutionForResult(activity, reqCode)
             } catch (exp: SendIntentException) {
-                Log.e(TAG, exp.message)
+                Log.e(TAG, exp.message.toString())
             }
         } else {
             Log.e(TAG, "intent is null")
@@ -246,7 +246,7 @@ object IapRequestHelper {
                 Log.e(TAG, "consumeOwnedPurchase fail, IapApiException returnCode: $returnCode")
             } else {
                 // Other external errors
-                Log.e(TAG, e.message)
+                Log.e(TAG, e.message.toString())
             }
         }
     }
