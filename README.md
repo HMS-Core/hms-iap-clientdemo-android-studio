@@ -49,8 +49,12 @@ You can use HMS Toolkit to quickly run the sample code. HMS Toolkit supports one
 6. Run the sample code on an Android device or simulator.
 
 ## Environment Requirements
-
-Android SDK 22 or later and JDK 1.8 or later are recommended.
+* JDK version: 1.8 or later
+* Android Studio version: 3.6.1 or later
+  - minSdkVersion: 19 or later
+  - targetSdkVersion: 30 (recommended)
+  - compileSdkVersion: 30 (recommended)
+  - Gradle version: 5.4.1 or later (recommended)
 
 ## Result
 
