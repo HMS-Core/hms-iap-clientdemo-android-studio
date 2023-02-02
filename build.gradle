@@ -5,10 +5,10 @@ buildscript {
         maven {url 'https://developer.huawei.com/repo/'}
         google()
         jcenter()
-        
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.4'
+        classpath 'com.android.tools.build:gradle:4.0.1'
 
         // Add the AppGallery Connect plugin configuration. Please refer to AppGallery Connect Plugin Dependency to select a proper plugin version. 
         classpath 'com.huawei.agconnect:agcp:1.6.0.300'
@@ -26,3 +26,4 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
