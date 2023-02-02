@@ -84,7 +84,7 @@ object DeliveryUtils {
         count += numOfGems[productId]!!
         editor.putLong(GEMS_COUNT_KEY, count)
         val stringSet = sharedPreferences.getStringSet(PURCHASETOKEN_KEY, HashSet())
-        stringSet.add(purchaseToken)
+        stringSet?.add(purchaseToken)
         editor.putStringSet(PURCHASETOKEN_KEY, stringSet)
         return editor.commit()
     }
