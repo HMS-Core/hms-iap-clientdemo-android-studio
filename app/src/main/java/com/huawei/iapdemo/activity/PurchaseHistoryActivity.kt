@@ -17,11 +17,13 @@
 package com.huawei.iapdemo.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ListView
+
+import androidx.appcompat.app.AppCompatActivity
+
 import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.OwnedPurchasesResult
@@ -31,6 +33,7 @@ import com.huawei.iapdemo.common.ExceptionHandle
 import com.huawei.iapdemo.common.IapApiCallback
 import com.huawei.iapdemo.common.IapRequestHelper
 import com.iapdemo.huawei.R
+
 import java.util.*
 
 /**
