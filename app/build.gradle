@@ -8,6 +8,7 @@ android {
         targetSdkVersion 30
         versionCode 60400301
         versionName "6.4.0.301"
+        applicationId "xxx.xxx.xxx"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -55,7 +56,6 @@ dependencies {
 
 
 }
-
 
 apply plugin: 'com.huawei.agconnect'
 repositories {
