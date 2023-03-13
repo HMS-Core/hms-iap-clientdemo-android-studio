@@ -52,7 +52,7 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
    5. Configure the sample code:
       - Download the file "agconnect-services.json" of the app on AGC, and add the file to the app root directory(\app) of the demo. 
       - Add the certificate file to the project and add your configuration to  in the app-level `build.gradle` file. 
-      - Open the `AndroidManifest` file and change the value of package to your app package name.  
+      - Open the app-level `build.gradle` file, and change the value of applicationId to your app package name.
       - Replace the PUBLIC_KEY in the CipherUtil class with the public key of your app. For details about how to obtain the public key, please refer to [Querying IAP Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/query-payment-info-0000001050166299).
       - Replace products in the demo with your products.
 
