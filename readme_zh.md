@@ -42,8 +42,8 @@
 
    * 在AppGallery Connect中下载应用的agconnect-services.json文件，把该文件添加至本demo的应用根目录(\app)中。
    * 添加证书文件，在应用级build.gradle文件中添加配置。
-   * 打开AndroidManifest文件，修改package为您的应用包名
-   * 将CipherUtil类中的PUBLIC_KEY替换为创建应用的公钥。获取公钥详情，参考查询支付服务信息
+   * 修改示例工程中应用级build.gradle文件中的applicationId为您自己的应用包名。
+   * 将CipherUtil类中的PUBLIC_KEY替换为创建应用的公钥。获取公钥详情，参考查询支付服务信息。
    * 将本demo中的商品替换为你的商品。
 6. 在Android设备或模拟机上运行该示例代码。
 
