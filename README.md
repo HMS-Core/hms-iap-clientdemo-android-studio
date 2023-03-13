@@ -1,5 +1,7 @@
 # Huawei In-App Purchases (IAP) Demo
 
+English | [中文](readme_zh.md)
+
 The iap_demo App demonstrates Huawei In-App Purchases (IAP) client APIs and usages. 
 
 Documentation can be found at this 
