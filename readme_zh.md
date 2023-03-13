@@ -1,5 +1,7 @@
 # 华为应用内支付服务客户端示例代码
 
+中文 | [English](README.md) 
+
 本章节主要介绍接入华为应用内支付的客户端开发步骤，帮助您快速了解华为支付提供的客户端接口及其使用方法。
 
 点击[此处](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/introduction-0000001050033062)了解更多。
