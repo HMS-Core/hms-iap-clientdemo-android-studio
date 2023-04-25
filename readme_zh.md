@@ -39,7 +39,7 @@
 1. 检查Android Studio开发环境是否准备就绪。如果是，则使用Android Studio打开示例代码工程路径下的build.gradle文件。
 2. 在AppGallery Connect中创建应用并配置应用信息。详情请参见：[配置AppGallery Connect](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/config-agc-0000001050033072)。
 3. 在AppGallery Connect中添加商品信息。详情请参见：[配置商品信息](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/config-product-0000001050033076)。
-4. 在Android Studio（3.0及以上版本）导入demo，再进行构建。
+4. 在Android Studio中导入demo，再进行构建。
 5. 配置示例代码：
 
    * 在AppGallery Connect中下载应用的agconnect-services.json文件，把该文件添加至本demo的应用根目录(\app)中。
@@ -52,10 +52,6 @@
 ## 环境要求
 * JDK 1.8及以上版本
 * 安装Android Studio 3.6.1及以上版本
-  - minSdkVersion 19及以上
-  - targetSdkVersion 30（推荐）
-  - compileSdkVersion 30（推荐）
-  - Gradle 5.4.1及以上（推荐）
 
 ## 运行结果
 
