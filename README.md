@@ -49,7 +49,7 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
 
    3. Add your products on the AppGallery Connect. See details: [Configuring In-App Product Information](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/config-product-0000001050033076)
 
-   4. To build this demo, please first import the demo in the Android Studio (3.x+).
+   4. To build this demo, please first import the demo in the Android Studio.
 
    5. Configure the sample code:
       - Download the file "agconnect-services.json" of the app on AGC, and add the file to the app root directory(\app) of the demo. 
@@ -63,10 +63,6 @@ You also can use HMS Toolkit to quickly integrate the kit and run the demo proje
 ## Supported Environments
 * JDK version: 1.8 or later
 * Android Studio version: 3.6.1 or later
-  - minSdkVersion: 19 or later
-  - targetSdkVersion: 30 (recommended)
-  - compileSdkVersion: 30 (recommended)
-  - Gradle version: 5.4.1 or later (recommended)
 
 ## Result
 Once you start the demo, you should be able to see the following page.
