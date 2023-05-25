@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import com.huawei.hms.iap.IapClient;
 import com.huawei.hms.iap.entity.ProductInfo;
-import com.iapdemo.huawei.R;
+import com.huawei.iapdemo.R;
 
 import java.util.List;
 
