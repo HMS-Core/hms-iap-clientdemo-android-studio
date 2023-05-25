@@ -29,13 +29,12 @@ import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.entity.IsEnvReadyResult
 import com.huawei.hms.iap.entity.OrderStatusCode
 import com.huawei.hms.iap.util.IapClientHelper
-import com.huawei.iapdemo.activity.EntryActivity
+import com.huawei.iapdemo.R
 import com.huawei.iapdemo.common.Constants
 import com.huawei.iapdemo.common.ExceptionHandle
 import com.huawei.iapdemo.common.IapApiCallback
 import com.huawei.iapdemo.common.IapRequestHelper
 import com.huawei.iapdemo.subscription.SubscriptionActivity
-import com.iapdemo.huawei.R
 
 /**
  * Entry Activity for the app.
