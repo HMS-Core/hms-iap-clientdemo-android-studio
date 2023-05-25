@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.huawei.iapdemo.R;
 import com.huawei.iapdemo.adapter.ProductListAdapter;
 import com.huawei.iapdemo.common.CipherUtil;
 import com.huawei.iapdemo.common.Constants;
@@ -43,7 +44,6 @@ import com.huawei.hms.iap.entity.ProductInfo;
 import com.huawei.hms.iap.entity.ProductInfoResult;
 import com.huawei.hms.iap.entity.PurchaseIntentResult;
 import com.huawei.hms.iap.entity.PurchaseResultInfo;
-import com.iapdemo.huawei.R;
 
 import org.json.JSONException;
 
