@@ -24,7 +24,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.huawei.hms.iap.entity.InAppPurchaseData
-import com.iapdemo.huawei.R
+import com.huawei.iapdemo.R
 import org.json.JSONException
 import org.json.JSONObject
 
