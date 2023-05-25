@@ -17,37 +17,64 @@
 package com.huawei.iapdemo.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.huawei.hms.iap.entity.InAppPurchaseData;
-import com.iapdemo.huawei.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.huawei.hms.iap.IapClient;
+import com.huawei.hms.iap.entity.ProductInfo;
+import com.huawei.iapdemo.R;
+import com.huawei.iapdemo.common.ProductItem;
 
 import java.util.List;
 
 /**
- * Adapter for bill list.
+ * Adapter for product list.
  *
  * @since 2019/12/9
  */
-public class BillListAdapter extends BaseAdapter {
-
-    private static final String TAG = "BillListAdapter";
+public class ProductListAdapter<T extends ProductInfo> extends BaseAdapter {
 
     private Context mContext;
 
-    private List<String> mBillList;
+    private List<T> products;
 
-    public BillListAdapter(Context context, List<String> billList) {
+    public ProductListAdapter(Context context, List<T> products) {
         mContext = context;
-        mBillList = billList;
+        this.products = products;
+    }
+
+    @Override
+    public int getCount() {
+        return products.size();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        T detail = products.get(position);
+        ProductListViewHolder holder = null;
+        if (null == convertView) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_layout, null);
+            holder = new ProductListViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ProductListViewHolder) convertView.getTag();
+        }
+        if (detail instanceof ProductItem) {
+            ProductItem productItem = (ProductItem) detail;
+            holder.productName.setText(productItem.getProductName());
+            holder.productPrice.setText(productItem.getCurrencySymbol() + productItem.getPrice());
+        } else {
+            holder.productName.setText(detail.getProductName());
+            holder.productPrice.setText(detail.getPrice());
+            if (detail.getPriceType() == IapClient.PriceType.IN_APP_NONCONSUMABLE) {
+                holder.imageView.setVisibility(View.GONE);
+            }
+        }
+        return convertView;
     }
 
     @Override
@@ -57,59 +84,23 @@ public class BillListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mBillList.get(position);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup rootView) {
-        BillListViewHolder holder = null;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.bill_list_item, null);
-            holder = new BillListViewHolder();
-            holder.orderStatus = (TextView) convertView.findViewById(R.id.bill_status);
-            holder.productName = (TextView) convertView.findViewById(R.id.bill_product_name);
-            holder.productPrice = (TextView) convertView.findViewById(R.id.bill_product_price);
-            convertView.setTag(holder);
-        } else {
-            holder = (BillListViewHolder) convertView.getTag();
+        if (products != null && products.size() > 0) {
+            return products.get(position);
         }
-        String billInfo = mBillList.get(position);
-        try {
-            JSONObject billInformation = new JSONObject(billInfo);
-            String productName = billInformation.optString("productName");
-            int productPrice = billInformation.optInt("price");
-            String currency = billInformation.optString("currency");
-            int orderStatus = billInformation.optInt("purchaseState");
-            holder.productName.setText(productName);
-            String productPriceNumber = productPrice / 100 + "." + productPrice % 100 + " " + currency;
-            holder.productPrice.setText(productPriceNumber);
-            switch (orderStatus) {
-                case InAppPurchaseData.PurchaseState.PURCHASED:
-                    holder.orderStatus.setText(R.string.success_state);
-                    break;
-                case InAppPurchaseData.PurchaseState.REFUNDED:
-                    holder.orderStatus.setText(R.string.refund_state);
-                    break;
-                case InAppPurchaseData.PurchaseState.CANCELED:
-                default:
-                    holder.orderStatus.setText(R.string.cancel_state);
-                    break;
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "Json error occured!");
-        }
-        return convertView;
+        return null;
+
     }
 
-    @Override
-    public int getCount() {
-        return mBillList.size();
-    }
-
-    public static class BillListViewHolder {
+    static class ProductListViewHolder {
         TextView productName;
         TextView productPrice;
-        TextView orderStatus;
+        ImageView imageView;
+
+        ProductListViewHolder(View view) {
+            productName = (TextView) view.findViewById(R.id.item_name);
+            productPrice = (TextView) view.findViewById(R.id.item_price);
+            imageView = (ImageView) view.findViewById(R.id.item_image);
+        }
     }
 
 }
