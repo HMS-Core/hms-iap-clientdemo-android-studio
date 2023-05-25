@@ -30,8 +30,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.hms.iap.entity.OrderStatusCode;
 import com.huawei.hms.iap.entity.OwnedPurchasesResult;
 import com.huawei.hms.iap.entity.ProductInfo;
+import com.huawei.iapdemo.R;
 import com.huawei.iapdemo.common.Constants;
-import com.iapdemo.huawei.R;
+
 import java.util.Arrays;
 import java.util.List;
 
