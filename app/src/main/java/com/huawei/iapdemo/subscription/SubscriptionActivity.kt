@@ -27,9 +27,9 @@ import android.widget.Toast
 import com.huawei.hms.iap.entity.OrderStatusCode
 import com.huawei.hms.iap.entity.OwnedPurchasesResult
 import com.huawei.hms.iap.entity.ProductInfo
+import com.huawei.iapdemo.R
 import com.huawei.iapdemo.common.Constants
 import com.huawei.iapdemo.subscription.SubscriptionContract.Presenter
-import com.iapdemo.huawei.R
 import java.util.*
 
 /**
