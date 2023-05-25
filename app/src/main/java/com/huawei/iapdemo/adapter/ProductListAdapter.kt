@@ -25,8 +25,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.ProductInfo
+import com.huawei.iapdemo.R
 import com.huawei.iapdemo.common.ProductItem
-import com.iapdemo.huawei.R
 
 /**
  * Adapter for product list.
