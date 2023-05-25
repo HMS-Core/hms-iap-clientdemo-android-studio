@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.huawei.iapdemo.R;
 import com.huawei.iapdemo.common.IapApiCallback;
 import com.huawei.iapdemo.common.Constants;
 import com.huawei.iapdemo.common.ExceptionHandle;
@@ -34,7 +35,6 @@ import com.huawei.hms.iap.IapClient;
 import com.huawei.hms.iap.entity.IsEnvReadyResult;
 import com.huawei.hms.iap.entity.OrderStatusCode;
 import com.huawei.hms.iap.util.IapClientHelper;
-import com.iapdemo.huawei.R;
 
 /**
  * Entry Activity for the app.
