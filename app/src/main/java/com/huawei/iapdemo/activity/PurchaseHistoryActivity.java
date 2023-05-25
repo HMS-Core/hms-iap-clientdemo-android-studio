@@ -24,6 +24,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.huawei.iapdemo.R;
 import com.huawei.iapdemo.adapter.BillListAdapter;
 import com.huawei.iapdemo.common.CipherUtil;
 import com.huawei.iapdemo.common.ExceptionHandle;
@@ -32,7 +33,6 @@ import com.huawei.iapdemo.common.IapRequestHelper;
 import com.huawei.hms.iap.Iap;
 import com.huawei.hms.iap.IapClient;
 import com.huawei.hms.iap.entity.OwnedPurchasesResult;
-import com.iapdemo.huawei.R;
 
 import java.util.ArrayList;
 import java.util.List;
